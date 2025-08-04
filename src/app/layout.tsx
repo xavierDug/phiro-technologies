@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PrelineScriptWrapper from '@/components/PrelineScriptWrapper';
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import Navbar from "@/components/navbar";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-display' });
 
 export const metadata: Metadata = {
   title: "Phiro Technologies",
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <Navbar />
       <body className="font-sans">
         {children}
