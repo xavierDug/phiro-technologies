@@ -1,5 +1,6 @@
 'use client';
 
+import Services from '@/components/services';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -10,7 +11,7 @@ export default function Home() {
         {/* Left: Content */}
         <div className="flex flex-col justify-center items-start px-10 md:px-20 py-24 z-10">
           <motion.h1
-            className=" text-white font-bold mb-6 leading-tight "
+            className=" text-white font-bold mb-8 leading-tight "
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -33,10 +34,10 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7, ease: 'easeOut' }}
           >
-            <button type="button" className="me-2 py-3 sm:py-4 px-6 sm:px-10 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-white text-black hover:bg-gray-200 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer">
+            <button type="button" className="me-4 py-3 sm:py-4 px-6 sm:px-10 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-white text-black hover:bg-gray-200 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer">
               Contact us
             </button>
-            <button type="button" className="py-3 sm:py-4 px-6 sm:px-10 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-800 text-gray-800 hover:border-gray-500 hover:text-gray-500 focus:outline-hidden focus:border-gray-500 focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:border-white dark:text-white dark:hover:text-neutral-300 dark:hover:border-neutral-300">
+            <button type="button" className="py-3 sm:py-4 px-6 sm:px-10 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-[#f5c843] text-[#f5c843] hover:border-[#f5c843]/80 hover:text-[#f5c843]/80 focus:outline-hidden focus:border-[#f5c843]/80 focus:text-[#f5c843]/80 disabled:opacity-50 disabled:pointer-events-none">
               Button
             </button>
           </motion.p>
@@ -60,9 +61,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black" />
         </motion.div>
       </div>
-      <div className='min-h-screen'>
-
-      </div>
+      <Services />
     </main>
   );
 }
