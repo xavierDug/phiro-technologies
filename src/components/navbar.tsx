@@ -13,7 +13,7 @@ export default function Navbar() {
                             height={40}
                             priority
                         />
-                        <p className="text-3xl">PHIRO</p>
+                        <h2 className="text-3xl">PHIRO</h2>
                     </a>
                     <div className="sm:hidden pe-4">
                         <button type="button" className="hs-collapse-toggle relative size-9 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10" id="hs-navbar-example-collapse" aria-expanded="false" aria-controls="hs-navbar-example" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-example">

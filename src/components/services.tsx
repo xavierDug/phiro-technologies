@@ -29,7 +29,7 @@ export default function Services() {
                 >
                     <h2 className="text-4xl md:text-5xl max-w-4xl mx-auto">
                         Three Ingredients To Craft A Website That{" "}
-                        <span className="underline decoration-[#f5c843] font-bold text-5xl">
+                        <span className="underline decoration-[#f5c843] font-bold text-4xl md:text-5xl">
                             Stands Out
                         </span>
                         <span className="text-[#f5c843] font-bold">.</span>
@@ -59,7 +59,7 @@ export default function Services() {
                         </div>
                         <div className="flex-grow flex items-end min-h-[250px] sm:min-h-0">
                             <Image
-                                src="/phoneMockup.png"
+                                src="/IphoneMockup.png"
                                 alt="iPhone mockup"
                                 width={1000}
                                 height={400}

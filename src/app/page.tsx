@@ -2,17 +2,33 @@
 
 import Projects from '@/components/projects';
 import Services from '@/components/services';
+import Story from '@/components/story';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 export default function Home() {
   return (
     <main>
-      <div className="min-h-screen bg-black text-[#e0e0e0] grid grid-cols-1 md:grid-cols-2">
+      <div className="min-h-screen bg-black text-[#e0e0e0] grid grid-cols-1 md:grid-cols-2 relative">
         {/* Left: Content */}
-        <div className="flex flex-col justify-center items-start px-10 md:px-20 py-24 z-10">
+        <div
+          className={`
+        flex flex-col justify-center items-start px-10 md:px-20 py-24 z-10
+        relative
+          `}
+        >
+          {/* Mobile background image */}
+          <div
+            className="absolute inset-0 md:hidden bg-cover bg-center filter saturate-150 hue-rotate-30"
+            style={{
+              backgroundImage: "url('/HeroImage.jpg')",
+            }}
+          />
+          {/* Mobile gradient overlay */}
+          <div className="absolute inset-0 md:hidden bg-gradient-to-t from-black/80 to-black/40" />
+          {/* Content */}
           <motion.h1
-            className=" text-white font-bold mb-8 leading-tight "
+            className="text-white font-bold mb-8 leading-tight relative"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -21,7 +37,7 @@ export default function Home() {
           </motion.h1>
 
           <motion.p
-            className="text-lg md:text-xl text-[#d0d0d0] max-w-xl"
+            className="text-lg md:text-xl text-[#d0d0d0] max-w-xl relative"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
@@ -30,7 +46,7 @@ export default function Home() {
           </motion.p>
 
           <motion.p
-            className="mt-8"
+            className="mt-8 relative"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7, ease: 'easeOut' }}
@@ -44,9 +60,9 @@ export default function Home() {
           </motion.p>
         </div>
 
-        {/* Right: Image from Unsplash */}
+        {/* Right: Image from Unsplash (hidden on small screens) */}
         <motion.div
-          className="relative w-full h-full"
+          className="relative w-full h-full hidden md:block"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2.5, ease: 'easeOut' }}
@@ -64,6 +80,7 @@ export default function Home() {
       </div>
       <Services />
       <Projects />
+      <Story />
     </main>
   );
 }
