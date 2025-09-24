@@ -1,5 +1,6 @@
 'use client';
 
+import Projects from '@/components/projects';
 import Services from '@/components/services';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -62,6 +63,7 @@ export default function Home() {
         </motion.div>
       </div>
       <Services />
+      <Projects />
     </main>
   );
 }
