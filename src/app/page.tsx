@@ -3,6 +3,7 @@
 import Projects from '@/components/projects';
 import Services from '@/components/services';
 import Story from '@/components/story';
+import Testimonials from '@/components/testimonials';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -81,6 +82,7 @@ export default function Home() {
       <Services />
       <Projects />
       <Story />
+      <Testimonials />
     </main>
   );
 }

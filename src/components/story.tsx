@@ -155,8 +155,8 @@ export default function Story() {
                                     strokeLinecap="round"
                                     vectorEffect="non-scaling-stroke"
                                     initial={{ pathLength: 0 }}
-                                    whileInView={{ pathLength: 1 }}
-                                    transition={{ duration: 4, ease: "easeInOut" }}
+                                    whileInView={{ pathLength: 1.5 }}
+                                    transition={{ duration: 5, ease: "easeInOut" }}
                                     viewport={{ once: true, amount: 0.3 }}
                                 />
                             </g>
