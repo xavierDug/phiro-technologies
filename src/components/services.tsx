@@ -17,7 +17,7 @@ const fadeUp: Variants = {
 
 export default function Services() {
     return (
-        <section className="bg-neutral-950 text-white py-20 px-2">
+        <section className="bg-neutral-950 text-white py-28 px-2">
             <div className="container mx-auto">
                 {/* Heading */}
                 <motion.div

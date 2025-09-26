@@ -1,11 +1,12 @@
 'use client';
 
+import CTA from '@/components/cta';
+import Footer from '@/components/footer';
 import Projects from '@/components/projects';
 import Services from '@/components/services';
 import Story from '@/components/story';
 import Testimonials from '@/components/testimonials';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -52,10 +53,10 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7, ease: 'easeOut' }}
           >
-            <button type="button" className="me-4 py-3 sm:py-4 px-6 sm:px-10 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-white text-black hover:bg-gray-200 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer">
+            <button type="button" className="me-4 py-3 sm:py-4 px-6 sm:px-10 inline-flex items-center gap-x-2 text-sm font-medium rounded-2xl border border-transparent bg-white text-black hover:bg-gray-200 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer">
               Contact us
             </button>
-            <button type="button" className="py-3 sm:py-4 px-6 sm:px-10 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-[#f5c843] text-[#f5c843] hover:border-[#f5c843]/80 hover:text-[#f5c843]/80 focus:outline-hidden focus:border-[#f5c843]/80 focus:text-[#f5c843]/80 disabled:opacity-50 disabled:pointer-events-none">
+            <button type="button" className="py-3 sm:py-4 px-6 sm:px-10 inline-flex items-center gap-x-2 text-sm font-medium rounded-2xl border border-[#f5c843] text-[#f5c843] hover:border-[#f5c843]/80 hover:text-[#f5c843]/80 focus:outline-hidden focus:border-[#f5c843]/80 focus:text-[#f5c843]/80 disabled:opacity-50 disabled:pointer-events-none">
               Button
             </button>
           </motion.p>
@@ -83,6 +84,8 @@ export default function Home() {
       <Projects />
       <Story />
       <Testimonials />
+      <CTA />
+      <Footer />
     </main>
   );
 }

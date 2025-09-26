@@ -17,10 +17,6 @@ export default function Story() {
         [FIB_COUNT, UNIT]
     );
 
-    // Calculate the center points based on bbox
-    const centerX = (bbox.minX + bbox.maxX) / 2;
-    const centerY = (bbox.minY + bbox.maxY) / 2;
-
     // Calculate the viewBox based on bbox
     const viewBoxWidth = bbox.maxX - bbox.minX + UNIT * 2; // Add padding
     const viewBoxHeight = bbox.maxY - bbox.minY + UNIT * 2;
@@ -29,7 +25,7 @@ export default function Story() {
 
     return (
         <section
-            className="relative py-20 px-4"
+            className="relative py-28 px-4"
             style={{
                 background: "linear-gradient(120deg, #0a0f2c 0%, #1a2150 100%)",
                 color: "white",

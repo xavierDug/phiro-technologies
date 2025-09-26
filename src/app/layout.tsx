@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PrelineScriptWrapper from '@/components/PrelineScriptWrapper';
 import { Inter, Playfair_Display } from "next/font/google";
@@ -20,8 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <Navbar />
       <body className="font-sans">
+        <Navbar />
         {children}
       </body>
       <PrelineScriptWrapper />

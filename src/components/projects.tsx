@@ -1,9 +1,42 @@
+"use client";
 import { motion } from "framer-motion";
-import { ArrowBigRight, MoveRight } from "lucide-react";
+import { MoveRight } from "lucide-react";
+import Image from "next/image";
+
+interface Project {
+    title: string;
+    description: string;
+    image: string;
+    link?: string;
+}
+
+const projects: Project[] = [
+    {
+        title: "Phiro – Gym Management SaaS",
+        description:
+            "Multi-tenant SaaS for gyms with subscription management, payments via Stripe, attendance tracking, and admin dashboards. Built with Next.js, .NET, SQL Server, and Firebase, deployed on Azure.",
+        image: "/saas-gym.png",
+        link: "/projects/phiro",
+    },
+    {
+        title: "OCH Planner – Automotive Workshop Tool",
+        description:
+            "Web app for mechanics to manage schedules and online appointments, with a Firebase-powered backend and responsive React/Next.js frontend.",
+        image: "/OCHProject.png",
+        link: "/projects/och-planner",
+    },
+    {
+        title: "Industrial Welding Website",
+        description:
+            "Custom WordPress site with integrated 3D models using Three.js, showcasing products interactively with a performant and SEO-optimized design.",
+        image: "/SoudureFLF.png",
+        link: "/projects/welding",
+    },
+];
 
 export default function Projects() {
     return (
-        <section className="bg-neutral-950 text-white py-20 px-2">
+        <section className="bg-neutral-950 text-white py-28 px-2">
             <div className="container mx-auto">
                 {/* Heading */}
                 <motion.div
@@ -33,60 +66,44 @@ export default function Projects() {
                     </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    {/* Project 1 */}
-                    <motion.div
-                        className="bg-neutral-900 rounded-3xl shadow-lg overflow-hidden hover:scale-[1.02] transition-transform duration-300"
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        viewport={{ once: true }}
-                    >
-                        <img
-                            src="/projectImg.png"
-                            alt="Project 1"
-                            className="w-full h-80 object-cover object-top p-2 rounded-3xl"
-                        />
-                        <div className="p-6">
-                            <h3 className="text-2xl font-bold mb-2">E-Commerce Redesign</h3>
-                            <p className="text-neutral-400">
-                                A complete overhaul of an online store, boosting conversions by 30% with a sleek, user-friendly design.
-                            </p>
-                        </div>
-                    </motion.div>
-                    {/* Project 2 */}
-                    <motion.div
-                        className="bg-neutral-900 rounded-3xl shadow-lg overflow-hidden hover:scale-[1.02] transition-transform duration-300"
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                        viewport={{ once: true }}
-                    >
-                        <img
-                            src="/projectImg.png"
-                            alt="Project 2"
-                            className="w-full h-80 object-cover object-top p-2 rounded-3xl"
-                        />
-                        <div className="p-6">
-                            <h3 className="text-2xl font-bold mb-2">SaaS Platform Launch</h3>
-                            <p className="text-neutral-400">
-                                Developed a scalable SaaS platform from scratch, enabling seamless user onboarding and management.
-                            </p>
-                        </div>
-                    </motion.div>
+                {/* Grid */}
+                <div className="grid md:grid-cols-3 gap-8">
+                    {projects.map((project, index) => (
+                        <motion.a
+                            key={index}
+                            href={project.link}
+                            className="group bg-neutral-900 rounded-3xl shadow-lg overflow-hidden hover:scale-[1.02] transition-transform duration-300"
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
+                            viewport={{ once: true }}
+                        >
+                            <Image
+                                src={project.image}
+                                alt={project.title}
+                                className="w-full h-64 object-cover p-2 rounded-3xl"
+                                height={1000}
+                                width={1000}
+                            />
+                            <div className="p-6">
+                                <p className="text-2xl font-bold mb-2 group-hover:text-[#f5c843] transition-colors">
+                                    {project.title}
+                                </p>
+                                <p className="text-neutral-400 text-sm">{project.description}</p>
+                            </div>
+                        </motion.a>
+                    ))}
                 </div>
-
-                {/* More projects can be added similarly */}
 
                 {/* CTA */}
                 <div className="text-center mt-16">
-                    <button type="button" className="py-3 px-8 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-white text-black hover:bg-gray-200 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer">
+                    <a
+                        href="/projects"
+                        className="py-3 px-8 inline-flex items-center gap-x-2 text-sm font-medium rounded-2xl border border-transparent bg-white text-black hover:bg-gray-200 transition-all"
+                    >
                         View All Projects <MoveRight className="w-5 h-5" />
-                    </button>
+                    </a>
                 </div>
-            </div>
-            <div className="mt-10 text-center text-neutral-500">
-                <p>More projects coming soon...</p>
             </div>
         </section>
     );

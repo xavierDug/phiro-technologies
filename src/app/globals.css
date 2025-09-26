@@ -23,7 +23,12 @@
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
 }
 
@@ -42,9 +47,12 @@ body {
 }
 
 @keyframes gradient {
-  0%, 100% {
+
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -53,4 +61,121 @@ body {
 .animate-gradient {
   background-size: 200% 200%;
   animation: gradient 10s ease infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse linear infinite;
+}
+
+/* ---------- Marquee: paste into globals.css ---------- */
+/* Variables (set dynamically by inline style from React):
+   --slice-width-px : "<number>px"
+   --marquee-duration: "<seconds>s"
+*/
+
+.marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  --slice-width-px: 0px;
+  --marquee-duration: 10s;
+  /* background variable for fades (optional) */
+  --marquee-bg: rgba(15, 23, 42, 1);
+  /* matches neutral-950-ish */
+}
+
+/* The moving content: it contains one original slice + clones */
+.marquee__content {
+  display: flex;
+  gap: 0;
+  /* gaps are on the slice level */
+  align-items: center;
+  will-change: transform;
+  animation: marquee linear infinite;
+  animation-duration: var(--marquee-duration);
+}
+
+/* reverse direction */
+.marquee--reverse .marquee__content {
+  animation-direction: reverse;
+}
+
+/* one single slice (one set of cards) */
+.marquee__slice {
+  display: flex;
+  gap: 1.5rem;
+  /* tailwind gap-6 = 1.5rem */
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 1.5rem;
+  /* same as gap so spacing is consistent */
+}
+
+/* container for copies (clones) */
+.marquee__copies {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+/* pause on hover so users can read cards */
+.marquee:hover .marquee__content {
+  animation-play-state: paused;
+}
+
+/* the animation translates the whole content by one slice width */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-1 * var(--slice-width-px)));
+  }
+}
+
+/* subtle fade edges to hide harsh cut-in/out */
+.marquee::before,
+.marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.marquee::before {
+  left: 0;
+  background: linear-gradient(to right, var(--marquee-bg), rgba(0, 0, 0, 0));
+}
+
+.marquee::after {
+  right: 0;
+  background: linear-gradient(to left, var(--marquee-bg), rgba(0, 0, 0, 0));
 }
