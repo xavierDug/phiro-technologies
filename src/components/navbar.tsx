@@ -1,7 +1,24 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+    const pathname = usePathname();
+
+    const navLinks = [
+        { href: "/", label: "Home" },
+        { href: "about", label: "About" },
+        { href: "projects", label: "Projects" },
+    ];
+
+    function isActive(href: string) {
+        if (href === "#") return false;
+        if (href === "/") return pathname === "/";
+        return pathname.startsWith(`/${href}`);
+    }
+
     return (
         <div className="fixed top-0 left-0 right-0 z-50 container mx-auto flex flex-wrap sm:justify-start sm:flex-nowrap w-full text-sm py-3 px-2 mb-2">
             <nav className="w-full mx-auto sm:pe-0 py-3 sm:flex sm:items-center sm:justify-between backdrop-blur-md bg-white/5 border border-white/10 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] rounded-3xl">
@@ -26,14 +43,25 @@ export default function Navbar() {
                 </div>
                 <div id="hs-navbar-example" className="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow sm:block px-4" aria-labelledby="hs-navbar-example-collapse">
                     <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5 pb-6 sm:pb-0">
-                        <a className="font-medium text-[#f5c843] focus:outline-hidden" href="#" aria-current="page">Home</a>
-                        <a className="font-medium text-gray-400 hover:text-gray-500 focus:outline-hidden focus:text-gray-500" href="#">About</a>
-                        <Link href="projects" className="font-medium text-gray-400 hover:text-gray-500 focus:outline-hidden focus:text-gray-500">Projects</Link>
-                        <a className="font-medium text-gray-400 hover:text-gray-500 focus:outline-hidden focus:text-gray-500" href="#">
+                        {navLinks.map(({ href, label }) => (
+                            <Link
+                                key={href}
+                                href={href === "#" ? "#" : `/${href === "/" ? "" : href}`}
+                                className={`font-medium focus:outline-hidden ${
+                                    isActive(href)
+                                        ? "text-[#f5c843]"
+                                        : "text-gray-400 hover:text-gray-500 focus:text-gray-500"
+                                }`}
+                                aria-current={isActive(href) ? "page" : undefined}
+                            >
+                                {label}
+                            </Link>
+                        ))}
+                        <Link className="font-medium text-gray-400 hover:text-gray-500 focus:outline-hidden focus:text-gray-500" href="contact">
                             <button type="button" className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-2xl border border-transparent bg-white text-black hover:bg-gray-200 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none cursor-pointer">
                                 Contact us
                             </button>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </nav>

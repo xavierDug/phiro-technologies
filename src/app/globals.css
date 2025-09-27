@@ -100,7 +100,7 @@ body {
 .marquee {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
   --slice-width-px: 0px;
   --marquee-duration: 10s;
   /* background variable for fades (optional) */

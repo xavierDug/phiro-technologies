@@ -99,7 +99,7 @@ function MarqueeRow({ tools, speed = 60, direction = "left" }: MarqueeRowProps) 
                     className="flex-none w-64 p-6 min-h-52 items-center rounded-2xl bg-neutral-900/70 backdrop-blur-md shadow-lg hover:scale-105 transition-transform duration-300 border border-neutral-800/50"
                 >
                     {tool.icon && <tool.icon className="size-8 mb-4 text-[#f5c843]" />}
-                    <h3 className="text-xl font-bold text-[#f5c843]">{tool.name}</h3>
+                    <p className="text-xl font-bold text-[#f5c843]">{tool.name}</p>
                     <p className="text-sm text-neutral-400">{tool.tagline}</p>
                 </div>
             ))}

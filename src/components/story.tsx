@@ -25,12 +25,7 @@ export default function Story() {
 
     return (
         <section
-            className="relative py-28 px-4"
-            style={{
-                background: "linear-gradient(120deg, #0a0f2c 0%, #1a2150 100%)",
-                color: "white",
-                overflow: "hidden",
-            }}
+            className="relative py-28 px-4 bg-neutral-900"
         >
             <div className="container mx-auto flex flex-col md:flex-row items-center gap-12 max-w-7xl">
                 {/* Left: Text Content */}
