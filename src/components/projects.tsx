@@ -12,7 +12,7 @@ interface Project {
 
 const projects: Project[] = [
     {
-        title: "Phiro – Gym Management SaaS",
+        title: "Members – Gym Management SaaS",
         description:
             "Multi-tenant SaaS for gyms with subscription management, payments via Stripe, attendance tracking, and admin dashboards. Built with Next.js, .NET, SQL Server, and Firebase, deployed on Azure.",
         image: "/saas-gym.png",

@@ -85,7 +85,6 @@ export default function Home() {
       <Story />
       <Testimonials />
       <CTA />
-      <Footer />
     </main>
   );
 }
