@@ -31,7 +31,7 @@ export default function Story() {
                 {/* Left: Text Content */}
                 <div className="flex-1">
                     <motion.h2
-                        className="text-4xl md:text-5xl font-bold mb-16"
+                        className="text-4xl md:text-5xl font-bold mb-16 text-white"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, ease: "easeOut" }}
@@ -82,7 +82,7 @@ export default function Story() {
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="text-xl font-semibold">{item.title}</p>
+                                    <p className="text-xl font-semibold text-white">{item.title}</p>
                                     <p className="text-gray-300">{item.desc}</p>
                                 </div>
                             </motion.div>

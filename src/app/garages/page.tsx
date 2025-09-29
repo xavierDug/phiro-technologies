@@ -461,7 +461,7 @@ export default function CampagneGarages() {
                                 <input
                                     type="text"
                                     name="business"
-                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-1 focus:ring-[#f5c843] focus:outline-none"
                                     required
                                 />
                             </div>
@@ -470,7 +470,7 @@ export default function CampagneGarages() {
                                 <input
                                     type="text"
                                     name="name"
-                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-1 focus:ring-[#f5c843] focus:outline-none"
                                     required
                                 />
                             </div>
@@ -479,7 +479,7 @@ export default function CampagneGarages() {
                                 <input
                                     type="email"
                                     name="email"
-                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-1 focus:ring-[#f5c843] focus:outline-none"
                                     required
                                 />
                             </div>
@@ -488,7 +488,7 @@ export default function CampagneGarages() {
                                 <input
                                     type="tel"
                                     name="phone"
-                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-1 focus:ring-[#f5c843] focus:outline-none"
                                 />
                             </div>
                         </div>
@@ -498,7 +498,7 @@ export default function CampagneGarages() {
                             <label className="block text-sm mb-2">Which package are you interested in?</label>
                             <select
                                 name="package"
-                                className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-1 focus:ring-[#f5c843] focus:outline-none"
                                 required
                             >
                                 <option value="">Select a package...</option>
@@ -515,7 +515,7 @@ export default function CampagneGarages() {
                             <textarea
                                 name="message"
                                 rows={4}
-                                className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-1 focus:ring-[#f5c843] focus:outline-none"
                                 placeholder="Tell us a bit about your garage or needs..."
                             />
                         </div>
