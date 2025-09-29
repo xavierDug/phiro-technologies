@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
     const pathname = usePathname();
+    if (pathname === "/garages") return null;
 
     const navLinks = [
         { href: "/", label: "Home" },
