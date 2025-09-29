@@ -2,7 +2,7 @@
 
 import CTA from "@/components/cta";
 import { motion } from "framer-motion";
-import { ArrowBigDown, ArrowDown, BriefcaseBusiness, CalendarX2, HandHelping, HeartHandshake, Mail, MonitorSmartphone, PhoneOff, Scaling, Send, Sparkle } from "lucide-react";
+import { ArrowBigDown, ArrowDown, BriefcaseBusiness, CalendarX2, HandHelping, HeartHandshake, Mail, MonitorSmartphone, PhoneOff, Scaling, Send, Sparkle, SparkleIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function CampagneGarages() {
@@ -246,7 +246,7 @@ export default function CampagneGarages() {
                                 >
                                     {/* Email link */}
                                     <a
-                                        href="#"
+                                        href="#pricing"
                                         className="flex items-center justify-center gap-2 bg-[#f5c843] text-black font-semibold p-4 sm:px-12 py-3 rounded-2xl shadow-lg hover:scale-105 hover:shadow-yellow-500/30 transition-transform duration-300"
                                     >
                                         Get Started Today <ArrowDown className="ms-2" size={20} />
@@ -258,6 +258,281 @@ export default function CampagneGarages() {
                             <div className="absolute inset-0 bg-gradient-to-tr from-yellow-500/20 via-transparent to-transparent blur-3xl" />
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* Pricing models cards */}
+            <section id="pricing" className="bg-neutral-900 text-white px-8 py-28 relative">
+                <div className="container mx-auto">
+                    {/* Heading */}
+                    <motion.div
+                        className="max-w-4xl mx-auto text-center mb-16"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-4xl md:text-5xl font-bold">
+                            Simple, Transparent{" "}
+                            <span className="underline decoration-[#f5c843]">Pricing</span>
+                        </h2>
+                        <p className="mt-6 text-lg text-gray-300">
+                            Choose the plan that fits your garage best. No hidden fees, no surprises.
+                        </p>
+                    </motion.div>
+
+                    {/* Pricing Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        {[
+                            {
+                                name: "Starter",
+                                price: "$599",
+                                desc: "Perfect for small garages getting their first website.",
+                                features: [
+                                    "1-page professional website",
+                                    "Mobile-friendly design",
+                                    "Domain & hosting included",
+                                    "Basic SEO setup",
+                                ],
+                                highlighted: false,
+                                delay: 0.2,
+                            },
+                            {
+                                name: "Growth",
+                                price: "$1099",
+                                desc: "Best for garages that want to stand out and attract more clients.",
+                                features: [
+                                    "Up to 5 pages (Services, About, Contact, etc.)",
+                                    "Online booking form",
+                                    "Domain & hosting included",
+                                    "SEO optimization",
+                                    "Priority support",
+                                ],
+                                highlighted: true,
+                                delay: 0.4,
+                            },
+                            {
+                                name: "Pro",
+                                price: "Custom",
+                                desc: "For garages that need advanced features or full customization.",
+                                features: [
+                                    "Unlimited pages",
+                                    "Advanced booking system",
+                                    "Custom integrations",
+                                    "Ongoing SEO & support",
+                                    "Tailored to your needs",
+                                ],
+                                highlighted: false,
+                                delay: 0.6,
+                            },
+                        ].map((plan, idx) => (
+                            <motion.div
+                                key={idx}
+                                className={`flex flex-col p-8 rounded-3xl border backdrop-blur-md shadow-lg transition transform hover:scale-105 ${plan.highlighted
+                                    ? "bg-[#f5c843] text-black border-yellow-400/40"
+                                    : "bg-neutral-800/70 text-white border-white/10"
+                                    }`}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.7, ease: "easeOut", delay: plan.delay }}
+                                viewport={{ once: true, amount: 0.3 }}
+                            >
+                                <h3 className="text-2xl font-bold mb-3">{plan.name}</h3>
+                                <p className="text-lg mb-6 opacity-80">{plan.desc}</p>
+                                <p className="text-4xl font-extrabold mb-6">{plan.price}</p>
+                                <ul className="space-y-3 mb-8">
+                                    {plan.features.map((feature, i) => (
+                                        <li key={i} className="flex items-center gap-2">
+                                            <Send
+                                                size={18}
+                                                className={`${plan.highlighted ? "text-black" : "text-[#f5c843]"
+                                                    }`}
+                                            />
+                                            <span>{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <a
+                                    href="#"
+                                    className={`mt-auto py-3 px-6 rounded-xl font-semibold transition ${plan.highlighted
+                                        ? "bg-black text-white hover:bg-neutral-900"
+                                        : "bg-[#f5c843] text-black hover:bg-[#e6b93c]"
+                                        }`}
+                                >
+                                    Get Started
+                                </a>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* demo section */}
+            <section className="bg-neutral-950 text-white px-8 py-28">
+                <div className="container mx-auto">
+                    {/* Heading */}
+                    <motion.div
+                        className="max-w-4xl mx-auto text-center mb-16"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-4xl md:text-5xl font-bold">
+                            See it in Action
+                        </h2>
+                        <p className="mt-6 text-lg text-gray-300">
+                            Here’s a real example of a professional garage website built with our $599 package.
+                        </p>
+                    </motion.div>
+
+                    {/* Showcase */}
+                    <div className="relative max-w-6xl mx-auto">
+                        <motion.a
+                            href="https://garage-template.vercel.app/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block overflow-hidden rounded-3xl shadow-2xl border border-white/10"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            viewport={{ once: true }}
+                        >
+                            <Image
+                                src="/Demo.png" // take a screenshot of the demo site and save it here
+                                alt="Garage Website Example"
+                                width={1600}
+                                height={900}
+                                className="w-full rounded-3xl"
+                            />
+                        </motion.a>
+                    </div>
+
+                    {/* Testimonial */}
+                    <motion.div
+                        className="max-w-3xl mx-auto text-center mt-16"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                    >
+                        <blockquote className="italic text-lg text-gray-300">
+                            “Our garage finally looks professional online. Customers find us easily, and booking calls has never been smoother.”
+                        </blockquote>
+                        <p className="mt-4 font-semibold text-[#f5c843]">
+                            — Example Garage Owner
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Final Lead Capture Form */}
+            <section id="contact" className="bg-black text-white px-8 py-28 relative">
+                <div className="container mx-auto">
+                    {/* Heading */}
+                    <motion.div
+                        className="max-w-4xl mx-auto text-center mb-12"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-4xl md:text-5xl font-bold">
+                            Get Your Garage Website Started
+                        </h2>
+                        <p className="mt-4 text-lg text-gray-300">
+                            Fill out the form and we’ll get back to you within 24 hours.
+                        </p>
+                    </motion.div>
+
+                    {/* Form */}
+                    <motion.form
+                        action="#"
+                        method="POST"
+                        className="max-w-3xl mx-auto bg-neutral-900/70 border border-[#f5c843]/20 backdrop-blur-md rounded-3xl p-10 shadow-lg space-y-6"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                        viewport={{ once: true }}
+                    >
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm mb-2">Garage / Business Name</label>
+                                <input
+                                    type="text"
+                                    name="business"
+                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm mb-2">Contact Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm mb-2">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm mb-2">Phone (optional)</label>
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Package select */}
+                        <div>
+                            <label className="block text-sm mb-2">Which package are you interested in?</label>
+                            <select
+                                name="package"
+                                className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                required
+                            >
+                                <option value="">Select a package...</option>
+                                <option value="starter">Starter ($599)</option>
+                                <option value="growth">Growth ($1099)</option>
+                                <option value="pro">Pro (Custom)</option>
+                                <option value="unsure">Not sure yet</option>
+                            </select>
+                        </div>
+
+                        {/* Message */}
+                        <div>
+                            <label className="block text-sm mb-2">Message (optional)</label>
+                            <textarea
+                                name="message"
+                                rows={4}
+                                className="w-full rounded-xl bg-neutral-800 border border-neutral-700 text-white p-3 focus:ring-2 focus:ring-[#f5c843] focus:outline-none"
+                                placeholder="Tell us a bit about your garage or needs..."
+                            />
+                        </div>
+
+                        {/* Submit */}
+                        <div className="text-center">
+                            <button
+                                type="submit"
+                                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#f5c843] text-black font-semibold hover:bg-[#e6b93c] transition flex items-center justify-center gap-2 mx-auto"
+                            >
+                                Request My Website <Mail size={18} />
+                            </button>
+                            <p className="text-sm text-gray-400 mt-3">
+                                We’ll never share your info. No spam.
+                            </p>
+                        </div>
+                    </motion.form>
                 </div>
             </section>
 
