@@ -2,7 +2,7 @@
 
 import CTA from "@/components/cta";
 import { motion } from "framer-motion";
-import { ArrowBigDown, ArrowDown, BriefcaseBusiness, CalendarX2, HandHelping, HeartHandshake, Mail, MonitorSmartphone, PhoneOff, Scaling, Send, Sparkle, SparkleIcon } from "lucide-react";
+import { ArrowBigDown, ArrowDown, BriefcaseBusiness, CalendarX2, Clock, HandHelping, HeartHandshake, Mail, MonitorSmartphone, PhoneOff, Scaling, Send, Sparkle, SparkleIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function CampagneGarages() {
@@ -19,7 +19,7 @@ export default function CampagneGarages() {
                                 transition={{ duration: 0.8, ease: 'easeOut' }}
                             >
                                 <p className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl italic'>
-                                    A professional website for your garage <span className='underline decoration-[#f5c843]'>starting at just </span><span className='text-[#f5c843]'>$599.</span>
+                                    A professional website for your garage for just <span className='text-[#f5c843]'>$600.</span>
                                 </p>
                             </motion.h1>
 
@@ -29,7 +29,7 @@ export default function CampagneGarages() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
                             >
-                                Modern design, domain, hosting & support — everything included.
+                                In just a quick 15-minute call, we’ll handle everything — domain, hosting, design, and support.
                             </motion.p>
                             <motion.p
                                 className="mt-8 relative"
@@ -173,9 +173,9 @@ export default function CampagneGarages() {
                                 delay: 0.6,
                             },
                             {
-                                icon: <HeartHandshake className="w-8 h-8 text-[#f5c843]" />,
-                                title: "Local SEO Boost",
-                                desc: "Appear when customers search 'garage near me' and never lose business to outdated competitors.",
+                                icon: <Clock className="w-8 h-8 text-[#f5c843]" />,
+                                title: "Quick & Hassle-Free Setup",
+                                desc: "One 15-minute call and your professional garage website is on its way. No tech skills needed.",
                                 delay: 0.8,
                             },
                         ].map((item, idx) => (
@@ -286,7 +286,7 @@ export default function CampagneGarages() {
                         {[
                             {
                                 name: "Starter",
-                                price: "$599",
+                                price: "$600",
                                 desc: "Perfect for small garages getting their first website.",
                                 features: [
                                     "1-page professional website",
@@ -299,7 +299,7 @@ export default function CampagneGarages() {
                             },
                             {
                                 name: "Growth",
-                                price: "$1099",
+                                price: "$1100",
                                 desc: "Best for garages that want to stand out and attract more clients.",
                                 features: [
                                     "Up to 5 pages (Services, About, Contact, etc.)",
@@ -529,7 +529,7 @@ export default function CampagneGarages() {
                                 Request My Website <Mail size={18} />
                             </button>
                             <p className="text-sm text-gray-400 mt-3">
-                                We’ll never share your info. No spam.
+                                We’ll never share your info. No spam. <br /> We’ll set up your garage website in just one quick 15-minute call.
                             </p>
                         </div>
                     </motion.form>
