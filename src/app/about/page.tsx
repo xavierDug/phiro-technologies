@@ -1,5 +1,8 @@
 "use client"
 
+import CTA from "@/components/cta";
+import OurJourney from "@/components/journey";
+import MissionSection from "@/components/Mission";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -61,6 +64,11 @@ export default function About() {
                     </div>
                 </div>
             </div>
+            <MissionSection />
+            <OurJourney />
+
+            {/* CTA Section */}
+            <CTA />
         </section>
     );
 }

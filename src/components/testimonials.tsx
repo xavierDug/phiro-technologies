@@ -129,7 +129,7 @@ function MarqueeRow({ tools, speed = 60, direction = "left" }: MarqueeRowProps) 
 
 export default function Testimonials() {
     return (
-        <section className="bg-neutral-950 text-white py-28 px-2 overflow-hidden relative">
+        <section className="bg-neutral-950 text-white py-28 overflow-hidden relative">
             <div className="container mx-auto">
                 {/* Heading */}
                 <motion.div
