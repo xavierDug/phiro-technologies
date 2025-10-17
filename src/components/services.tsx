@@ -5,20 +5,24 @@ import { motion, Variants } from "framer-motion";
 const fadeUp: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: (i: number = 0) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.2,
-        duration: 0.6,
-        ease: "easeOut",
-      },
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: i * 0.2,
+            duration: 0.6,
+            ease: "easeOut",
+        },
     }),
-  };
+};
 
 export default function Services() {
     return (
-        <section className="bg-neutral-950 text-white py-28 px-2">
-            <div className="container mx-auto">
+        <section className="bg-neutral-950 text-white py-28 px-2 relative overflow-hidden">
+            {/* Background gradients */}
+            <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 via-neutral-950 to-black" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,200,67,0.05),transparent_70%)]" />
+
+            <div className="container mx-auto relative">
                 {/* Heading */}
                 <motion.div
                     className="max-w-6xl mx-auto text-center mb-16"
