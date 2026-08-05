@@ -1,7 +1,6 @@
 'use client';
 
 import CTA from '@/components/cta';
-import Footer from '@/components/footer';
 import Projects from '@/components/projects';
 import Services from '@/components/services';
 import Story from '@/components/story';

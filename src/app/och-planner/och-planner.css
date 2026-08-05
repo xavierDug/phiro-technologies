@@ -1,0 +1,73 @@
+/*
+ * OCH Planner campaign theme.
+ *
+ * Every token is scoped to `.och-scope` so this page can carry OCH Planner's
+ * identity without touching Phiro's site-wide theme. Nothing here leaks out of
+ * the /och-planner route.
+ */
+
+.och-scope {
+  /*
+   * OCH Planner blue: the page's primary chrome. --och-blue is the real brand
+   * value (#0047b1); the other three are derived from it (lighter hover tint,
+   * darker gradient base, translucent wash) to keep the palette in one hue.
+   */
+  --och-blue: #0047b1;
+  --och-blue-bright: #297fff;
+  --och-blue-deep: #001433;
+  --och-blue-wash: rgba(0, 71, 177, 0.12);
+
+  /* --- Phiro gold: the credential accent, and nothing else --- */
+  --phiro-gold: #f5c843;
+
+  /* --- Neutrals --- */
+  --och-ink: #05070d;
+  --och-surface: #0a0e18;
+  --och-surface-raised: #111726;
+  --och-line: rgba(255, 255, 255, 0.09);
+  --och-text: #f5f7fb;
+  --och-text-muted: #99a3b8;
+
+  background-color: var(--och-ink);
+  color: var(--och-text);
+}
+
+/*
+ * OCH Planner is a different brand from Phiro: drop the global Playfair display
+ * face in favour of tight, heavy Inter. Same two fonts the site already loads.
+ */
+.och-scope h1,
+.och-scope h2,
+.och-scope h3,
+.och-scope h4,
+.och-scope h5,
+.och-scope h6 {
+  font-family: var(--font-sans);
+  letter-spacing: -0.025em;
+}
+
+/* Anchor offset so the sticky header never covers a jumped-to section. */
+.och-scope [id] {
+  scroll-margin-top: 6rem;
+}
+
+.och-scope ::selection {
+  background: var(--och-blue);
+  color: #ffffff;
+}
+
+/* Native select needs an explicit dark palette for its popup on Windows. */
+.och-scope select option {
+  background-color: var(--och-surface-raised);
+  color: var(--och-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .och-scope *,
+  .och-scope *::before,
+  .och-scope *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
