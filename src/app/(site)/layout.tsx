@@ -1,5 +1,7 @@
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { Toaster } from "@/components/ui/sonner";
 
 /**
  * Chrome for the main Phiro Technologies site.
@@ -13,9 +15,11 @@ export default function SiteLayout({
 }>) {
   return (
     <>
+      <ScrollProgress className="z-[70] h-[2px] bg-gradient-to-r from-gold-deep via-gold to-gold-deep" />
       <Navbar />
-      {children}
+      <main id="main">{children}</main>
       <Footer />
+      <Toaster position="bottom-right" />
     </>
   );
 }
