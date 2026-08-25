@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/metadata";
+
 import { ContactPanel } from "@/components/sections/contact-panel";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Contact",
   description:
-    "Tell us what you're building. We reply to every enquiry within one business day.",
-};
+    "Start a project with Phiro Technologies. Tell us what you're building and get a considered reply from a Montréal engineer within one business day.",
+  path: "/contact",
+  locale: "en",
+});
 
 export default function ContactPage() {
   return <ContactPanel />;

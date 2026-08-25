@@ -12,15 +12,13 @@ import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/motion";
 import {
     BUDGET_IDS,
-    BUDGET_LABELS,
     PROJECT_TYPE_IDS,
-    PROJECT_TYPE_LABELS,
     TIMELINE_IDS,
-    TIMELINE_LABELS,
     type BudgetId,
     type ProjectTypeId,
     type TimelineId,
 } from "@/server/contact/contact.dto";
+import { useLocale } from "@/components/layout/locale-provider";
 
 interface FormState {
     name: string;
@@ -45,7 +43,8 @@ const EMPTY: FormState = {
     website: "",
 };
 
-const STEPS = ["Project", "Scope", "Details"] as const;
+/** Step count is fixed at three; only the labels vary by locale. */
+const STEP_COUNT = 3;
 
 /** Mirrors the server validator so people are not told about mistakes late. */
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -103,6 +102,8 @@ function FieldError({ message }: { message?: string }) {
 }
 
 export function ContactForm() {
+    const { dict } = useLocale();
+    const t = dict.form;
     const [step, setStep] = useState(0);
     const [form, setForm] = useState<FormState>(EMPTY);
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -124,23 +125,23 @@ export function ContactForm() {
         const found: Record<string, string> = {};
 
         if (index === 0) {
-            if (!form.projectType) found.projectType = "Pick the closest match.";
+            if (!form.projectType) found.projectType = t.errors.projectType;
         }
 
         if (index === 1) {
-            if (!form.budget) found.budget = "A rough range is fine.";
-            if (!form.timeline) found.timeline = "Roughly when are you hoping to start?";
+            if (!form.budget) found.budget = t.errors.budget;
+            if (!form.timeline) found.timeline = t.errors.timeline;
         }
 
         if (index === 2) {
-            if (!form.name.trim()) found.name = "Tell us who we're speaking with.";
+            if (!form.name.trim()) found.name = t.errors.name;
             if (!form.email.trim()) {
-                found.email = "We need an email to reply to.";
+                found.email = t.errors.emailRequired;
             } else if (!EMAIL_PATTERN.test(form.email.trim())) {
-                found.email = "That email doesn't look right.";
+                found.email = t.errors.emailInvalid;
             }
             if (form.message.trim().length < 10) {
-                found.message = "A sentence or two would help.";
+                found.message = t.errors.message;
             }
         }
 
@@ -149,7 +150,7 @@ export function ContactForm() {
     }
 
     function next() {
-        if (validateStep(step)) setStep((s) => Math.min(s + 1, STEPS.length - 1));
+        if (validateStep(step)) setStep((s) => Math.min(s + 1, STEP_COUNT - 1));
     }
 
     async function handleSubmit(event: React.FormEvent) {
@@ -171,16 +172,16 @@ export function ContactForm() {
 
             if (!response.ok || !data?.ok) {
                 const serverErrors = data?.errors ?? {
-                    form: "Something went wrong. Please try again.",
+                    form: t.errors.generic,
                 };
                 setErrors(serverErrors);
-                toast.error(serverErrors.form ?? "Please check the highlighted fields.");
+                toast.error(serverErrors.form ?? t.errors.checkFields);
                 return;
             }
 
             setDone(true);
         } catch {
-            const message = "Could not reach the server. Check your connection.";
+            const message = t.errors.network;
             setErrors({ form: message });
             toast.error(message);
         } finally {
@@ -199,10 +200,9 @@ export function ContactForm() {
                 <span className="mx-auto grid size-14 place-items-center rounded-full bg-gold/15">
                     <Check className="size-6 text-gold" />
                 </span>
-                <h2 className="mt-6 text-2xl tracking-tight">Message sent</h2>
+                <h2 className="mt-6 text-2xl tracking-tight">{t.successTitle}</h2>
                 <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-dim">
-                    Thanks {form.name.split(" ")[0]} — we&apos;ve got it. You&apos;ll hear
-                    back within one business day, usually sooner.
+                    {t.successBody.replace("{name}", form.name.split(" ")[0])}
                 </p>
             </motion.div>
         );
@@ -213,7 +213,7 @@ export function ContactForm() {
             {/* Progress */}
             <div className="mb-10">
                 <div className="mb-4 flex items-center justify-between">
-                    {STEPS.map((label, i) => (
+                    {t.steps.map((label, i) => (
                         <span
                             key={label}
                             className={cn(
@@ -229,7 +229,7 @@ export function ContactForm() {
                     <motion.div
                         className="h-px bg-gold"
                         initial={false}
-                        animate={{ width: `${((step + 1) / STEPS.length) * 100}%` }}
+                        animate={{ width: `${((step + 1) / STEP_COUNT) * 100}%` }}
                         transition={{ duration: 0.5, ease: EASE }}
                     />
                 </div>
@@ -261,15 +261,15 @@ export function ContactForm() {
                         {step === 0 && (
                             <fieldset>
                                 <legend className="mb-1 text-xl tracking-tight">
-                                    What are you building?
+                                    {t.projectLegend}
                                 </legend>
                                 <p className="mb-6 text-sm text-dim">
-                                    Closest match is fine — we&apos;ll figure out the rest together.
+                                    {t.projectHint}
                                 </p>
                                 <OptionGrid
-                                    name="Project type"
+                                    name={t.groupProjectType}
                                     options={PROJECT_TYPE_IDS}
-                                    labels={PROJECT_TYPE_LABELS}
+                                    labels={t.projectTypes}
                                     value={form.projectType}
                                     onChange={(value) => update("projectType", value)}
                                 />
@@ -281,15 +281,15 @@ export function ContactForm() {
                             <div className="space-y-8">
                                 <fieldset>
                                     <legend className="mb-1 text-xl tracking-tight">
-                                        Rough budget?
+                                        {t.budgetLegend}
                                     </legend>
                                     <p className="mb-6 text-sm text-dim">
-                                        This shapes what we can honestly recommend. No wrong answer.
+                                        {t.budgetHint}
                                     </p>
                                     <OptionGrid
-                                        name="Budget"
+                                        name={t.groupBudget}
                                         options={BUDGET_IDS}
-                                        labels={BUDGET_LABELS}
+                                        labels={t.budgets}
                                         value={form.budget}
                                         onChange={(value) => update("budget", value)}
                                     />
@@ -298,12 +298,12 @@ export function ContactForm() {
 
                                 <fieldset>
                                     <legend className="mb-4 text-xl tracking-tight">
-                                        When do you want to start?
+                                        {t.timelineLegend}
                                     </legend>
                                     <OptionGrid
-                                        name="Timeline"
+                                        name={t.groupTimeline}
                                         options={TIMELINE_IDS}
-                                        labels={TIMELINE_LABELS}
+                                        labels={t.timelines}
                                         value={form.timeline}
                                         onChange={(value) => update("timeline", value)}
                                     />
@@ -316,7 +316,7 @@ export function ContactForm() {
                             <div className="space-y-6">
                                 <div>
                                     <legend className="mb-1 text-xl tracking-tight">
-                                        How do we reach you?
+                                        {t.contactLegend}
                                     </legend>
                                     <p className="text-sm text-dim">
                                         Last step — then tell us about the project.
@@ -326,7 +326,7 @@ export function ContactForm() {
                                 <div className="grid gap-5 sm:grid-cols-2">
                                     <div>
                                         <Label htmlFor="name" className="mb-2 text-dim">
-                                            Name
+                                            {t.name}
                                         </Label>
                                         <Input
                                             id="name"
@@ -341,7 +341,8 @@ export function ContactForm() {
 
                                     <div>
                                         <Label htmlFor="company" className="mb-2 text-dim">
-                                            Company <span className="text-faint">(optional)</span>
+                                            {t.company}{" "}
+                                            <span className="text-faint">{t.optional}</span>
                                         </Label>
                                         <Input
                                             id="company"
@@ -355,7 +356,7 @@ export function ContactForm() {
 
                                 <div>
                                     <Label htmlFor="email" className="mb-2 text-dim">
-                                        Email
+                                        {t.email}
                                     </Label>
                                     <Input
                                         id="email"
@@ -371,7 +372,7 @@ export function ContactForm() {
 
                                 <div>
                                     <Label htmlFor="message" className="mb-2 text-dim">
-                                        What are you trying to make happen?
+                                        {t.message}
                                     </Label>
                                     <Textarea
                                         id="message"
@@ -380,7 +381,7 @@ export function ContactForm() {
                                         onChange={(e) => update("message", e.target.value)}
                                         aria-invalid={Boolean(errors.message)}
                                         className="resize-none border-line bg-surface/50"
-                                        placeholder="The problem, who it's for, and anything you've already tried."
+                                        placeholder={t.messagePlaceholder}
                                     />
                                     <FieldError message={errors.message} />
                                 </div>
@@ -404,17 +405,17 @@ export function ContactForm() {
                         className="inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 text-sm text-dim transition-colors hover:border-line-strong hover:text-text"
                     >
                         <ArrowLeft className="size-4" />
-                        Back
+                        {t.back}
                     </button>
                 )}
 
-                {step < STEPS.length - 1 ? (
+                {step < STEP_COUNT - 1 ? (
                     <button
                         type="button"
                         onClick={next}
                         className="group ml-auto inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3 text-sm font-medium text-ink transition-colors hover:bg-[#ffd75e]"
                     >
-                        Continue
+                        {t.continue}
                         <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                     </button>
                 ) : (
@@ -426,11 +427,11 @@ export function ContactForm() {
                         {submitting ? (
                             <>
                                 <Loader2 className="size-4 animate-spin" />
-                                Sending
+                                {t.sending}
                             </>
                         ) : (
                             <>
-                                Send message
+                                {t.send}
                                 <Send className="size-4" />
                             </>
                         )}

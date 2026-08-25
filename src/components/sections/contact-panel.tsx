@@ -7,17 +7,32 @@ import LightRays from "@/components/ui/LightRays";
 import { NoiseTexture } from "@/components/ui/noise-texture";
 import { ContactForm } from "@/components/sections/contact-form";
 import { contactDetails } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { EASE, fadeUp, stagger, VIEWPORT } from "@/lib/motion";
 
-const directContact = [
-  { icon: Mail, label: "Email", value: contactDetails.email, href: `mailto:${contactDetails.email}` },
-  { icon: MapPin, label: "Based in", value: contactDetails.location },
-  { icon: Clock, label: "Response time", value: contactDetails.responseTime },
+type ContactCopy = { emailLabel: string; basedIn: string; responseTime: string };
+
+/** Built per render so the labels follow the active locale. */
+const buildDirectContact = (copy: ContactCopy, responseTime: string) => [
+  {
+    icon: Mail,
+    label: copy.emailLabel,
+    value: contactDetails.email,
+    href: `mailto:${contactDetails.email}`,
+  },
+  { icon: MapPin, label: copy.basedIn, value: contactDetails.location },
+  { icon: Clock, label: copy.responseTime, value: responseTime },
 ];
 
 export function ContactPanel() {
   const reduced = useReducedMotion();
+  const { dict } = useLocale();
+  const page = dict.sections.pages.contact;
+  const directContact = buildDirectContact(
+    dict.sections.contact,
+    dict.common.responseTime
+  );
 
   return (
     <section className="relative min-h-screen overflow-hidden pt-36 pb-28">
@@ -61,18 +76,16 @@ export function ContactPanel() {
         >
           <div className="mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-gold/50" />
-            <span className="eyebrow">Contact</span>
+            <span className="eyebrow">{page.eyebrow}</span>
           </div>
 
           <h1 className="text-[clamp(2.5rem,7vw,5rem)]">
-            Tell us what you&apos;re <span className="accent-serif">making</span>
+            {page.title} <span className="accent-serif">{page.accent}</span>
             <span className="text-gold">.</span>
           </h1>
 
           <p className="mt-7 max-w-lg text-lg leading-relaxed text-dim">
-            Three quick questions, then the details. We read every message
-            ourselves and reply within a business day — including the ones where
-            the honest answer is that we&apos;re not the right fit.
+            {page.description}
           </p>
         </motion.div>
 
@@ -94,7 +107,7 @@ export function ContactPanel() {
             className="space-y-8 lg:sticky lg:top-32 lg:self-start"
           >
             <motion.p variants={fadeUp} className="eyebrow">
-              Or reach us directly
+              {dict.sections.contact.reachDirectly}
             </motion.p>
 
             {directContact.map(({ icon: Icon, label, value, href }) => (

@@ -12,6 +12,9 @@
  * this ships publicly.
  */
 
+import type { Locale } from "@/lib/seo";
+import { projectsFr } from "@/content/projects.fr";
+
 export type ProjectCategory = "SaaS" | "Web App" | "Website" | "E-commerce";
 
 export interface ProjectMetric {
@@ -319,3 +322,38 @@ export const projectCategories = [
   "All",
   ...Array.from(new Set(projects.map((p) => p.category))),
 ];
+
+/* ---------------------------------------------------------------------------
+   Locale-aware accessors.
+
+   The English arrays above stay the default export surface so nothing that
+   already imports `projects` breaks. Anything rendering inside a locale should
+   use these instead.
+--------------------------------------------------------------------------- */
+
+export function getProjects(locale: Locale): Project[] {
+  return locale === "fr" ? projectsFr : projects;
+}
+
+export function getFeaturedProjects(locale: Locale): Project[] {
+  return getProjects(locale).filter((p) => p.featured);
+}
+
+export function getProjectFor(slug: string, locale: Locale): Project | undefined {
+  return getProjects(locale).find((p) => p.slug === slug);
+}
+
+/** Wraps around, so the last case study still offers somewhere to go next. */
+export function getNextProjectFor(slug: string, locale: Locale): Project {
+  const list = getProjects(locale);
+  const index = list.findIndex((p) => p.slug === slug);
+  return list[(index + 1) % list.length];
+}
+
+/**
+ * Filter keys for the projects index. The values are the `ProjectCategory`
+ * union, NOT display labels — filtering must not depend on the active language.
+ * The dictionary maps each key to a label at render time.
+ */
+export const CATEGORY_KEYS = ["All", ...new Set(projects.map((p) => p.category))] as const;
+export type CategoryKey = (typeof CATEGORY_KEYS)[number];

@@ -3,7 +3,8 @@
 import { motion } from "motion/react";
 
 import { SectionHeading } from "@/components/sections/section-heading";
-import { processSteps } from "@/content/site";
+import { getSiteContent } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
 import { EASE, VIEWPORT } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +34,10 @@ import { cn } from "@/lib/utils";
  * should be able to hold the page standing still.
  */
 export function Process() {
+  const { locale, dict } = useLocale();
+  const copy = dict.sections.process;
+  const { processSteps } = getSiteContent(locale);
+
   return (
     <section className="relative border-t border-line py-28 sm:py-36">
       <div
@@ -42,10 +47,10 @@ export function Process() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         <SectionHeading
-          eyebrow="How we work"
-          title="Four steps, no"
-          accent="theatre"
-          description="The same sequence on every engagement, whether it is a landing page or a multi-tenant platform."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          accent={copy.accent}
+          description={copy.description}
         />
 
         {/*

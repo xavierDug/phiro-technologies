@@ -10,6 +10,8 @@ import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { NoiseTexture } from "@/components/ui/noise-texture";
 import { Magnetic } from "@/components/layout/magnetic";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useLocale } from "@/components/layout/locale-provider";
+import { localePath } from "@/lib/seo";
 import { EASE } from "@/lib/motion";
 
 /** Gold ramp fed to the Aurora shader — brand gold, deepened at both ends. */
@@ -17,6 +19,8 @@ const AURORA_STOPS = ["#C9962E", "#F5C843", "#8A5A1F"];
 
 export function Hero() {
   const reduced = useReducedMotion();
+  const { locale, dict } = useLocale();
+  const copy = dict.sections.hero;
 
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
@@ -46,18 +50,18 @@ export function Hero() {
           <div className="group flex items-center gap-2 rounded-full border border-line bg-white/[0.03] px-4 py-1.5 backdrop-blur-sm">
             <span className="size-1.5 rounded-full bg-gold shadow-[0_0_10px_2px_rgba(245,200,67,0.6)]" />
             <AnimatedShinyText className="text-xs tracking-wide">
-              Available for new projects
+              {copy.badge}
             </AnimatedShinyText>
           </div>
         </motion.div>
 
         <h1 className="max-w-[16ch] text-[clamp(2.9rem,8.5vw,6.5rem)]">
           {reduced ? (
-            <span className="block">Purpose,</span>
+            <span className="block">{copy.titleLead}</span>
           ) : (
             <SplitText
               tag="span"
-              text="Purpose,"
+              text={copy.titleLead}
               className="block"
               delay={28}
               duration={1}
@@ -73,7 +77,7 @@ export function Hero() {
             transition={{ duration: 1, ease: EASE, delay: 0.45 }}
             className="block"
           >
-            <span className="accent-serif">Engineered</span>
+            <span className="accent-serif">{copy.titleAccent}</span>
             <span className="text-gold">.</span>
           </motion.span>
         </h1>
@@ -84,8 +88,7 @@ export function Hero() {
           transition={{ duration: 0.8, ease: EASE, delay: 0.6 }}
           className="mt-8 max-w-lg text-lg leading-relaxed text-dim"
         >
-          We design and build smart, scalable software for companies that need it
-          to still make sense in three years.
+          {copy.lead}
         </motion.p>
 
         <motion.div
@@ -96,20 +99,20 @@ export function Hero() {
         >
           <Magnetic>
             <Link
-              href="/contact"
+              href={localePath("/contact", locale)}
               className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-ink transition-colors duration-300 hover:bg-[#ffd75e]"
             >
-              Start a project
+              {dict.common.startProject}
               <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </Magnetic>
 
           <Magnetic>
             <Link
-              href="/projects"
+              href={localePath("/projects", locale)}
               className="inline-flex items-center gap-2 rounded-full border border-line-strong px-7 py-3.5 text-sm text-text transition-colors duration-300 hover:border-gold hover:text-gold"
             >
-              See our work
+              {dict.common.seeWork}
             </Link>
           </Magnetic>
         </motion.div>
@@ -127,7 +130,7 @@ export function Hero() {
           transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="eyebrow">Scroll</span>
+          <span className="eyebrow">{copy.scroll}</span>
           <ArrowDown className="size-4 text-faint" />
         </motion.div>
       </motion.div>

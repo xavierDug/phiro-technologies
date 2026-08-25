@@ -3,10 +3,14 @@
 import { motion } from "motion/react";
 
 import { NumberTicker } from "@/components/ui/number-ticker";
-import { stats } from "@/content/site";
+import { getSiteContent } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
 import { fadeUp, stagger, VIEWPORT } from "@/lib/motion";
 
 export function Stats() {
+  const { locale } = useLocale();
+  const { stats } = getSiteContent(locale);
+
   return (
     <section className="border-t border-line py-20">
       <div className="mx-auto max-w-6xl px-6">

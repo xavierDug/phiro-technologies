@@ -1,26 +1,16 @@
 import type { Metadata } from "next";
 
-import { PageHero } from "@/components/sections/page-hero";
-import { ProjectIndex } from "@/components/sections/project-index";
-import { CTA } from "@/components/sections/cta";
+import { ProjectsView } from "@/components/pages/projects-view";
+import { buildMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Work",
   description:
-    "SaaS platforms, web applications and marketing sites built by Phiro Technologies — with the reasoning behind each one.",
-};
+    "Case studies from a Montréal software studio: multi-tenant SaaS, booking platforms and product sites, with the engineering reasoning behind each build.",
+  path: "/projects",
+  locale: "en",
+});
 
 export default function ProjectsPage() {
-  return (
-    <>
-      <PageHero
-        eyebrow="Work"
-        title="Where ideas become"
-        accent="real"
-        description="From multi-tenant SaaS to interactive product sites. Each case study covers what was actually hard, not just what shipped."
-      />
-      <ProjectIndex />
-      <CTA />
-    </>
-  );
+  return <ProjectsView locale="en" />;
 }

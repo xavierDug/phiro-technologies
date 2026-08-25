@@ -21,6 +21,7 @@ import { PiFileCSharp } from "react-icons/pi";
 
 import LogoLoop from "@/components/ui/LogoLoop";
 import { stack } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
 
 /**
  * Maps the icon slugs in `content/site.ts` to concrete components, so the
@@ -62,10 +63,13 @@ const logos = stack.map((item) => {
 });
 
 export function Stack() {
+  const { dict } = useLocale();
+  const copy = dict.sections.stack;
+
   return (
     <section className="border-t border-line py-16">
       <div className="mx-auto max-w-6xl px-6">
-        <p className="eyebrow mb-10 text-center">The tools we reach for</p>
+        <p className="eyebrow mb-10 text-center">{copy.eyebrow}</p>
       </div>
 
       <LogoLoop
@@ -77,7 +81,7 @@ export function Stack() {
         scaleOnHover
         fadeOut
         fadeOutColor="#050506"
-        ariaLabel="Technologies we build with"
+        ariaLabel={copy.ariaLabel}
       />
     </section>
   );

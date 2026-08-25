@@ -7,9 +7,14 @@ import { ArrowUpRight, Mail } from "lucide-react";
 import { Particles } from "@/components/ui/particles";
 import { Magnetic } from "@/components/layout/magnetic";
 import { contactDetails } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
+import { localePath } from "@/lib/seo";
 import { fadeUp, stagger, VIEWPORT } from "@/lib/motion";
 
 export function CTA() {
+  const { locale, dict } = useLocale();
+  const copy = dict.sections.cta;
+
   return (
     <section className="relative overflow-hidden border-t border-line py-32 sm:py-40">
       <Particles
@@ -35,15 +40,15 @@ export function CTA() {
         className="relative mx-auto max-w-3xl px-6 text-center"
       >
         <motion.p variants={fadeUp} className="eyebrow mb-6">
-          Next step
+          {copy.eyebrow}
         </motion.p>
 
         <motion.h2
           variants={fadeUp}
           className="text-[clamp(2.25rem,6vw,4.25rem)]"
         >
-          Ready to build something{" "}
-          <span className="accent-serif">great</span>
+          {copy.title}{" "}
+          <span className="accent-serif">{copy.accent}</span>
           <span className="text-gold">?</span>
         </motion.h2>
 
@@ -51,8 +56,7 @@ export function CTA() {
           variants={fadeUp}
           className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-dim"
         >
-          Tell us what you are trying to make happen. We will tell you honestly
-          whether we are the right people to build it.
+          {copy.description}
         </motion.p>
 
         <motion.div
@@ -61,10 +65,10 @@ export function CTA() {
         >
           <Magnetic>
             <Link
-              href="/contact"
+              href={localePath("/contact", locale)}
               className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-ink transition-colors duration-300 hover:bg-[#ffd75e]"
             >
-              Start a project
+              {dict.common.startProject}
               <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </Magnetic>
@@ -75,13 +79,13 @@ export function CTA() {
               className="inline-flex items-center gap-2 rounded-full border border-line-strong px-7 py-3.5 text-sm text-text transition-colors duration-300 hover:border-gold hover:text-gold"
             >
               <Mail className="size-4" />
-              Email us directly
+              {copy.emailUs}
             </a>
           </Magnetic>
         </motion.div>
 
         <motion.p variants={fadeUp} className="mt-8 font-mono text-xs text-faint">
-          {contactDetails.responseTime}
+          {dict.common.responseTime}
         </motion.p>
       </motion.div>
     </section>

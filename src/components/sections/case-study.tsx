@@ -15,9 +15,12 @@ import { NoiseTexture } from "@/components/ui/noise-texture";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { fadeUp, stagger, VIEWPORT } from "@/lib/motion";
 import type { Project, ProjectSection } from "@/content/projects";
+import { useLocale } from "@/components/layout/locale-provider";
+import { localePath } from "@/lib/seo";
 
 /** Cover image that drifts slightly slower than the page — depth, not spectacle. */
 function CaseHero({ project }: { project: Project }) {
+  const { locale, dict } = useLocale();
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -58,14 +61,14 @@ function CaseHero({ project }: { project: Project }) {
         >
           <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
             <Link
-              href="/projects"
+              href={localePath("/projects", locale)}
               className="font-mono text-[11px] uppercase tracking-[0.18em] text-faint transition-colors hover:text-gold"
             >
               Work
             </Link>
             <span className="text-faint">/</span>
             <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-gold">
-              {project.category}
+              {dict.sections.projectCategories[project.category]}
             </span>
           </motion.div>
 
@@ -104,10 +107,12 @@ function CaseHero({ project }: { project: Project }) {
 }
 
 function MetaRail({ project }: { project: Project }) {
+  const { dict } = useLocale();
+  const labels = dict.sections.caseStudy;
   const rows = [
-    { label: "Client", value: project.client },
-    { label: "Year", value: project.year },
-    { label: "Role", value: project.role },
+    { label: labels.client, value: project.client },
+    { label: labels.year, value: project.year },
+    { label: labels.role, value: project.role },
   ];
 
   return (
@@ -120,7 +125,7 @@ function MetaRail({ project }: { project: Project }) {
           </div>
         ))}
         <div>
-          <dt className="eyebrow mb-3">Stack</dt>
+          <dt className="eyebrow mb-3">{labels.stack}</dt>
           <dd>
             <ul className="flex flex-wrap gap-2">
               {project.stack.map((tech) => (
@@ -178,6 +183,8 @@ function Narrative({ section }: { section: ProjectSection }) {
 }
 
 function Metrics({ project }: { project: Project }) {
+  const { dict } = useLocale();
+  const labels = dict.sections.caseStudy;
   return (
     <section className="relative border-y border-line bg-surface/30 py-20">
       <div
@@ -185,7 +192,7 @@ function Metrics({ project }: { project: Project }) {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_100%_at_50%_0%,rgba(245,200,67,0.07),transparent)]"
       />
       <div className="relative mx-auto max-w-6xl px-6">
-        <p className="eyebrow mb-12 text-center">Results</p>
+        <p className="eyebrow mb-12 text-center">{labels.results}</p>
         <dl className="grid gap-12 sm:grid-cols-3">
           {project.metrics.map((metric) => (
             <div key={metric.label} className="text-center">
@@ -204,11 +211,13 @@ function Metrics({ project }: { project: Project }) {
 }
 
 function Gallery({ project }: { project: Project }) {
+  const { dict } = useLocale();
+  const labels = dict.sections.caseStudy;
   const reduced = useReducedMotion();
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-28">
-      <p className="eyebrow mb-12">Screens</p>
+      <p className="eyebrow mb-12">{labels.screens}</p>
 
       <div className="space-y-16">
         {project.gallery.map((item, index) => {
@@ -263,9 +272,12 @@ function Gallery({ project }: { project: Project }) {
 }
 
 function NextProject({ next }: { next: Project }) {
+  const { locale, dict } = useLocale();
+  const labels = dict.sections.caseStudy;
+
   return (
     <Link
-      href={`/projects/${next.slug}`}
+      href={localePath(`/projects/${next.slug}`, locale)}
       className="group relative block overflow-hidden border-t border-line"
     >
       <Image
@@ -281,7 +293,7 @@ function NextProject({ next }: { next: Project }) {
       />
 
       <div className="relative mx-auto flex max-w-6xl flex-col items-center px-6 py-32 text-center">
-        <p className="eyebrow mb-5">Next case study</p>
+        <p className="eyebrow mb-5">{labels.next}</p>
         <h2 className="flex items-center gap-3 text-[clamp(2rem,5.5vw,4rem)] transition-colors duration-500 group-hover:text-gold">
           {next.name}
           <ArrowUpRight className="size-8 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />

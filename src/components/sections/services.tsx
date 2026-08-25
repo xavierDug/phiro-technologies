@@ -5,7 +5,8 @@ import { motion } from "motion/react";
 import { BentoCard } from "@/components/ui/bento";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { SERVICE_VISUALS } from "@/components/sections/service-visuals";
-import { services } from "@/content/site";
+import { getSiteContent } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
 import { cn } from "@/lib/utils";
 import { fadeUp, stagger, VIEWPORT } from "@/lib/motion";
 
@@ -28,14 +29,18 @@ const CORNERS: Record<string, string> = {
 };
 
 export function Services() {
+  const { locale, dict } = useLocale();
+  const copy = dict.sections.services;
+  const { services } = getSiteContent(locale);
+
   return (
     <section className="relative border-t border-line py-28 sm:py-36">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
-          eyebrow="What we do"
-          title="Software that earns its"
-          accent="keep"
-          description="Four disciplines, one team. We take a product from the first uncomfortable question through to the version people rely on."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          accent={copy.accent}
+          description={copy.description}
         />
 
         <motion.div

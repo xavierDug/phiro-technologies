@@ -4,7 +4,8 @@ import type { Variants } from "motion/react";
 import { motion } from "motion/react";
 
 import { SectionHeading } from "@/components/sections/section-heading";
-import { values } from "@/content/site";
+import { getSiteContent } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { EASE } from "@/lib/motion";
 
@@ -70,6 +71,9 @@ const edge: Variants = {
 
 export function Mission() {
   const reduced = useReducedMotion();
+  const { locale, dict } = useLocale();
+  const copy = dict.sections.mission;
+  const { values } = getSiteContent(locale);
 
   // With reduced motion the focus pass is skipped entirely and every belief
   // simply renders in its focused state — the readable one.
@@ -94,10 +98,10 @@ export function Mission() {
       <div className="relative mx-auto grid max-w-6xl gap-16 px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
-            eyebrow="What we believe"
-            title="Technology should feel"
-            accent="inevitable"
-            description="Not clever. Not impressive. Obvious — as though the product could not reasonably have worked any other way. Getting there is the whole job."
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            accent={copy.accent}
+            description={copy.description}
           />
         </div>
 

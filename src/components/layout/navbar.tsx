@@ -1,24 +1,37 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
-import { navLinks } from "@/content/site";
+import { buildNavLinks } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/motion";
 import { Magnetic } from "@/components/layout/magnetic";
+import { useLocale } from "@/components/layout/locale-provider";
+import { LocaleSwitcher } from "@/components/layout/locale-switcher";
+import { localePath, stripLocale } from "@/lib/seo";
 
+/**
+ * Compared on the locale-free path so `/about` and `/fr/about` both light up
+ * the same nav item.
+ */
 function isActive(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname.startsWith(href);
+  const path = stripLocale(pathname);
+  const target = stripLocale(href);
+  if (target === "/") return path === "/";
+  return path.startsWith(target);
 }
 
 export function Navbar() {
   const pathname = usePathname();
+  const { locale, dict } = useLocale();
+  // Memoised so it keeps a stable identity across renders — the measuring
+  // effect below lists it as a dependency.
+  const navLinks = useMemo(() => buildNavLinks(dict, locale), [dict, locale]);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -61,7 +74,7 @@ export function Navbar() {
       observer.disconnect();
       window.removeEventListener("resize", measure);
     };
-  }, [pathname]);
+  }, [pathname, navLinks]);
 
   // The bar contracts once you leave the hero, so the WebGL background reads
   // cleanly on load but the nav gains a solid backing while you read.
@@ -86,8 +99,8 @@ export function Navbar() {
           )}
         >
           <Link
-            href="/"
-            aria-label="Phiro Technologies — home"
+            href={localePath("/", locale)}
+            aria-label={`Phiro Technologies — ${dict.nav.home}`}
             className="group flex items-center gap-2.5 pl-1"
           >
             <Image
@@ -145,12 +158,13 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2">
+            <LocaleSwitcher className="hidden sm:inline-block" />
             <Magnetic className="hidden md:block">
               <Link
-                href="/contact"
+                href={localePath("/contact", locale)}
                 className="group inline-flex items-center gap-1.5 rounded-full bg-gold px-5 py-2.5 text-sm font-medium text-ink transition-colors duration-300 hover:bg-[#ffd75e]"
               >
-                Start a project
+                {dict.common.startProject}
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </Magnetic>
@@ -158,7 +172,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              aria-label="Open menu"
+              aria-label={dict.nav.menu}
               className="grid size-10 place-items-center rounded-full border border-line text-text md:hidden"
             >
               <Menu className="size-5" />
@@ -195,7 +209,7 @@ export function Navbar() {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  aria-label="Close menu"
+                  aria-label={dict.nav.close}
                   className="grid size-10 place-items-center rounded-full border border-line"
                 >
                   <X className="size-5" />
@@ -231,13 +245,17 @@ export function Navbar() {
                 className="mt-auto pb-10"
               >
                 <Link
-                  href="/contact"
+                  href={localePath("/contact", locale)}
                   onClick={() => setOpen(false)}
                   className="flex w-full items-center justify-center gap-2 rounded-full bg-gold py-4 font-medium text-ink"
                 >
-                  Start a project
+                  {dict.common.startProject}
                   <ArrowUpRight className="size-4" />
                 </Link>
+
+                <div className="mt-6 flex justify-center">
+                  <LocaleSwitcher />
+                </div>
               </motion.div>
             </motion.div>
           </motion.div>

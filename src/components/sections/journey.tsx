@@ -4,10 +4,15 @@ import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
 import { SectionHeading } from "@/components/sections/section-heading";
-import { journey } from "@/content/site";
+import { getSiteContent } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
 import { fadeUp, VIEWPORT } from "@/lib/motion";
 
 export function Journey() {
+  const { locale, dict } = useLocale();
+  const copy = dict.sections.journey;
+  const { journey } = getSiteContent(locale);
+
   const ref = useRef<HTMLDivElement>(null);
 
   // The gold line fills as the timeline scrolls past, so progress through the
@@ -27,10 +32,10 @@ export function Journey() {
     <section className="border-t border-line py-28 sm:py-36">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
-          eyebrow="The road so far"
-          title="How Phiro got"
-          accent="here"
-          description="Short version: we kept refusing to ship things we would not want to maintain."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          accent={copy.accent}
+          description={copy.description}
         />
 
         <div ref={ref} className="relative mt-20 pl-10 sm:pl-16">

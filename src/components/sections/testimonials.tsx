@@ -2,7 +2,8 @@
 
 import { Marquee } from "@/components/ui/marquee";
 import { SectionHeading } from "@/components/sections/section-heading";
-import { testimonials, type Testimonial } from "@/content/site";
+import { getSiteContent, type Testimonial } from "@/content/site";
+import { useLocale } from "@/components/layout/locale-provider";
 
 function QuoteCard({ quote, author, role }: Testimonial) {
   return (
@@ -27,6 +28,10 @@ function QuoteCard({ quote, author, role }: Testimonial) {
 }
 
 export function Testimonials() {
+  const { locale, dict } = useLocale();
+  const copy = dict.sections.testimonials;
+  const { testimonials } = getSiteContent(locale);
+
   const half = Math.ceil(testimonials.length / 2);
   const firstRow = testimonials.slice(0, half);
   const secondRow = testimonials.slice(half);
@@ -35,9 +40,9 @@ export function Testimonials() {
     <section className="relative overflow-hidden border-t border-line py-28 sm:py-36">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
-          eyebrow="Clients"
-          title="What it's like to work with"
-          accent="us"
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          accent={copy.accent}
           align="center"
         />
       </div>

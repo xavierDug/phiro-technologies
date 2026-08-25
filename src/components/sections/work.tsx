@@ -8,25 +8,31 @@ import { ArrowUpRight } from "lucide-react";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { SectionHeading } from "@/components/sections/section-heading";
-import { featuredProjects } from "@/content/projects";
+import { getFeaturedProjects } from "@/content/projects";
 import { fadeUp, stagger, VIEWPORT } from "@/lib/motion";
+import { useLocale } from "@/components/layout/locale-provider";
+import { localePath } from "@/lib/seo";
 
 export function Work() {
+  const { locale, dict } = useLocale();
+  const copy = dict.sections.work;
+  const featuredProjects = getFeaturedProjects(locale);
+
   return (
     <section className="relative border-t border-line py-28 sm:py-36">
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
-            eyebrow="Selected work"
-            title="Projects that speak for"
-            accent="themselves"
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            accent={copy.accent}
           />
 
           <Link
-            href="/projects"
+            href={localePath("/projects", locale)}
             className="group inline-flex shrink-0 items-center gap-2 text-sm text-dim transition-colors hover:text-gold"
           >
-            All projects
+            {copy.allProjects}
             <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
@@ -40,7 +46,10 @@ export function Work() {
         >
           {featuredProjects.map((project) => (
             <motion.div key={project.slug} variants={fadeUp}>
-              <Link href={`/projects/${project.slug}`} className="group block h-full">
+              <Link
+                href={localePath(`/projects/${project.slug}`, locale)}
+                className="group block h-full"
+              >
                 <SpotlightCard
                   className="relative h-full overflow-hidden rounded-2xl border border-line bg-surface/60 p-0"
                   spotlightColor="rgba(245, 200, 67, 0.12)"
@@ -59,7 +68,7 @@ export function Work() {
                   <div className="p-6">
                     <div className="flex items-center gap-3">
                       <span className="font-mono text-[11px] tracking-[0.18em] text-gold/70 uppercase">
-                        {project.category}
+                        {dict.sections.projectCategories[project.category]}
                       </span>
                       <span className="h-px flex-1 bg-line" />
                       <span className="font-mono text-[11px] text-faint">

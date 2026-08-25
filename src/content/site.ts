@@ -6,22 +6,59 @@
  * `och-planner/_content/offer.ts`.
  */
 
+import type { Dictionary } from "@/content/dictionaries/types";
+import { en } from "@/content/dictionaries/en";
+import { BUSINESS, localePath, type Locale } from "@/lib/seo";
+import {
+  journeyFr,
+  processStepsFr,
+  servicesFr,
+  statsFr,
+  testimonialsFr,
+  valuesFr,
+} from "@/content/site.fr";
+
 export interface NavLink {
   href: string;
   label: string;
 }
 
-export const navLinks: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Work" },
-  { href: "/contact", label: "Contact" },
-];
+/**
+ * Navigation as structure, not strings: the path is fixed, the label comes from
+ * the active dictionary. Adding a locale therefore cannot forget a nav item.
+ */
+const NAV_ITEMS = [
+  { key: "home", path: "/" },
+  { key: "about", path: "/about" },
+  { key: "work", path: "/projects" },
+  { key: "blog", path: "/blog" },
+  { key: "contact", path: "/contact" },
+] as const satisfies readonly { key: keyof Dictionary["nav"]; path: string }[];
 
+export function buildNavLinks(dict: Dictionary, locale: Locale): NavLink[] {
+  return NAV_ITEMS.map((item) => ({
+    href: localePath(item.path, locale),
+    label: dict.nav[item.key],
+  }));
+}
+
+/** English default, kept for components that have no locale in scope yet. */
+export const navLinks: NavLink[] = buildNavLinks(en, "en");
+
+/**
+ * Published contact details.
+ *
+ * These strings must stay byte-identical to the Google Business Profile — the
+ * match between site and profile is a literal string comparison, so "Montréal"
+ * and "Montreal" are two different businesses as far as it is concerned.
+ * Sourced from BUSINESS in lib/seo.ts so the JSON-LD cannot disagree with the
+ * footer.
+ */
 export const contactDetails = {
-  email: "hello@phirotechnologies.com",
-  // TODO(content): confirm the address you want published.
-  location: "Québec, Canada",
+  email: BUSINESS.email,
+  phone: BUSINESS.telephone,
+  phoneHref: `tel:${BUSINESS.telephoneE164}`,
+  location: `${BUSINESS.addressLocality}, ${BUSINESS.addressRegion}, Canada`,
   responseTime: "Within one business day",
 };
 
@@ -267,3 +304,33 @@ export const values: Value[] = [
       "We will tell you when a request is a bad idea, and why. You are paying for judgement, not agreement.",
   },
 ];
+
+/**
+ * Locale-resolved site content.
+ *
+ * `stack` is deliberately absent: product names (Next.js, .NET, PostgreSQL) are
+ * proper nouns and are not translated.
+ */
+export interface SiteContent {
+  services: Service[];
+  processSteps: ProcessStep[];
+  testimonials: Testimonial[];
+  stats: Stat[];
+  journey: JourneyEntry[];
+  values: Value[];
+}
+
+export function getSiteContent(locale: Locale): SiteContent {
+  if (locale === "fr") {
+    return {
+      services: servicesFr,
+      processSteps: processStepsFr,
+      testimonials: testimonialsFr,
+      stats: statsFr,
+      journey: journeyFr,
+      values: valuesFr,
+    };
+  }
+
+  return { services, processSteps, testimonials, stats, journey, values };
+}

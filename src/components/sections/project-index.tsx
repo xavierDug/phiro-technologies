@@ -7,11 +7,16 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
 import SpotlightCard from "@/components/ui/SpotlightCard";
-import { projects, projectCategories } from "@/content/projects";
+import { CATEGORY_KEYS, getProjects } from "@/content/projects";
+import { useLocale } from "@/components/layout/locale-provider";
+import { localePath } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/motion";
 
 export function ProjectIndex() {
+  const { locale, dict } = useLocale();
+  const projects = getProjects(locale);
+  const categoryLabels = dict.sections.projectCategories;
   const [active, setActive] = useState<string>("All");
 
   const visible = useMemo(
@@ -19,14 +24,14 @@ export function ProjectIndex() {
       active === "All"
         ? projects
         : projects.filter((project) => project.category === active),
-    [active]
+    [active, projects]
   );
 
   return (
     <section className="py-24 sm:py-28">
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-wrap items-center gap-2">
-          {projectCategories.map((category) => {
+          {CATEGORY_KEYS.map((category) => {
             const isActive = category === active;
             return (
               <button
@@ -46,13 +51,16 @@ export function ProjectIndex() {
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
-                <span className="relative z-10">{category}</span>
+                <span className="relative z-10">{categoryLabels[category]}</span>
               </button>
             );
           })}
 
           <span className="ml-auto font-mono text-xs text-faint">
-            {visible.length} {visible.length === 1 ? "project" : "projects"}
+            {visible.length}{" "}
+            {visible.length === 1
+              ? dict.sections.projectCount.one
+              : dict.sections.projectCount.other}
           </span>
         </div>
 
@@ -77,7 +85,7 @@ export function ProjectIndex() {
                 }}
               >
                 <Link
-                  href={`/projects/${project.slug}`}
+                  href={localePath(`/projects/${project.slug}`, locale)}
                   className="group block h-full"
                 >
                   <SpotlightCard
@@ -98,7 +106,7 @@ export function ProjectIndex() {
                     <div className="p-7">
                       <div className="flex items-center gap-3">
                         <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-gold/70">
-                          {project.category}
+                          {categoryLabels[project.category]}
                         </span>
                         <span className="h-px flex-1 bg-line" />
                         <span className="font-mono text-[11px] text-faint">
