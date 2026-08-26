@@ -114,32 +114,44 @@ function BlockView({ block }: { block: Block }) {
       );
 
     case "callout": {
-      const Icon =
-        block.tone === "warn" ? TriangleAlert : block.tone === "win" ? Sparkles : Info;
       const warn = block.tone === "warn";
+      const Icon = warn ? TriangleAlert : block.tone === "win" ? Sparkles : Info;
 
+      // A hairline-only version had no left bar and no tint, but also no
+      // physical presence — it read as a stray paragraph rather than an
+      // aside worth pausing on. This gives it real weight the same way the
+      // `code` block above already does: a bordered surface-2 panel with a
+      // header row. Same container, same rhythm — a callout now reads as a
+      // sibling of that device rather than a one-off. The fill stays neutral
+      // (never gold- or red-tinted); only the icon and the closing dash
+      // carry tone, and red is reserved for an actual warning.
       return (
         <aside
           className={cn(
             MEASURE,
-            "mt-8 rounded-xl border-l-2 py-5 pl-5 pr-5",
-            warn
-              ? "border-l-destructive/70 bg-destructive/[0.06]"
-              : "border-l-gold bg-gold/[0.045]"
+            "mt-8 overflow-hidden rounded-xl border bg-surface-2",
+            warn ? "border-destructive/25" : "border-line"
           )}
         >
-          <div className="flex items-center gap-2.5">
-            <Icon
-              className={cn("size-4 shrink-0", warn ? "text-destructive" : "text-gold")}
-              aria-hidden="true"
-            />
-            {block.title && (
-              <p className="font-display text-sm tracking-tight text-text">
-                {block.title}
-              </p>
+          <div
+            className={cn(
+              "flex items-center justify-between border-b px-4 py-2.5",
+              warn ? "border-destructive/20" : "border-line"
             )}
+          >
+            <span className="flex items-center gap-2">
+              <Icon
+                className={cn("size-3.5 shrink-0", warn ? "text-destructive" : "text-gold")}
+                aria-hidden="true"
+              />
+              {block.title && <span className="eyebrow">{block.title}</span>}
+            </span>
+            <span
+              aria-hidden="true"
+              className={cn("h-px w-8", warn ? "bg-destructive/40" : "bg-gold/40")}
+            />
           </div>
-          <p className="mt-2 text-[0.975rem] leading-relaxed text-text/70">
+          <p className="px-4 py-4 text-[0.975rem] leading-relaxed text-text/75">
             <Inline text={block.text} />
           </p>
         </aside>
