@@ -77,6 +77,7 @@ export const sectionsEn: SectionsDict = {
         "No account managers, no handoff to a junior team. The person who scopes your site designs it, writes the code and answers when something needs to change.",
       name: "Xavier Dugal",
       role: "Founder, Phiro Technologies",
+      imageAlt: "Xavier Dugal in a graduation cap and gown, holding a rolled diploma",
     },
     stack: {
       eyebrow: "The tools we reach for",

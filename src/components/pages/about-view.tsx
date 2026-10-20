@@ -104,8 +104,15 @@ export function AboutView({ locale }: { locale: Locale }) {
       {/* Team */}
       <section className="mx-auto max-w-7xl px-5 py-28 sm:px-10 sm:py-36">
         <Reveal className="grid items-center gap-14 md:grid-cols-2 md:gap-20">
-          <div className="relative grid aspect-[4/5] place-items-center overflow-hidden rounded-[20px] bg-panel">
-            <Image src="/PhiroTechnoNoText.png" alt="" width={469} height={469} className="w-2/5 opacity-90" />
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] bg-panel">
+            {/* The source is a tall 980x2000 portrait; the object position keeps the crop on cap, face and shoulders. */}
+            <Image
+              src="/XavierDugal.jpg"
+              alt={copy.team.imageAlt}
+              fill
+              sizes="(max-width: 767px) calc(100vw - 2.5rem), 560px"
+              className="object-cover object-[50%_19%]"
+            />
           </div>
           <div>
             <p className="eyebrow mb-6">{copy.team.eyebrow}</p>

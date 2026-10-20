@@ -50,7 +50,7 @@ export interface SectionsDict {
   about: {
     values: HeadingCopy;
     journey: HeadingCopy;
-    team: HeadingCopy & { name: string; role: string };
+    team: HeadingCopy & { name: string; role: string; imageAlt: string };
     stack: { eyebrow: string };
     imageAlt: string;
   };

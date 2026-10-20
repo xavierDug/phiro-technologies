@@ -86,6 +86,7 @@ export const sectionsFr: SectionsDict = {
         "Pas de chargé de compte, pas de transfert à une équipe junior. La personne qui cadre votre site le conçoit, écrit le code et répond quand quelque chose doit changer.",
       name: "Xavier Dugal",
       role: "Fondateur, Phiro Technologies",
+      imageAlt: "Xavier Dugal en toge et toque de diplômé, tenant son diplôme roulé",
     },
     stack: {
       eyebrow: "Les outils que nous utilisons",
