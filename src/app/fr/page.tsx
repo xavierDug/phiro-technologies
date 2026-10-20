@@ -12,5 +12,5 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function FrenchHomePage() {
-  return <HomeView />;
+  return <HomeView locale="fr" />;
 }

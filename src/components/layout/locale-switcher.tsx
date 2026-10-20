@@ -51,14 +51,15 @@ export function LocaleSwitcher({ className }: { className?: string }) {
     <Link
       href={href}
       hrefLang={other}
-      aria-label={dict.nav.switchLanguage}
       title={dict.nav.switchLanguage}
       className={cn(
-        "rounded-full border border-line px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim transition-colors duration-300 hover:border-gold/40 hover:text-gold",
+        "inline-flex h-9 items-center rounded-full px-2 font-mono text-xs uppercase tracking-[0.14em] text-muted transition-colors duration-300 hover:text-ink",
         className
       )}
     >
       {other}
+      {/* Visible "FR" stays the start of the accessible name (WCAG 2.5.3). */}
+      <span className="sr-only"> — {dict.nav.switchLanguage}</span>
     </Link>
   );
 }

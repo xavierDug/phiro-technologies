@@ -51,6 +51,11 @@ export interface Project {
   /** Two or three sentences, opening the case study. */
   intro: string;
   cover: string;
+  /**
+   * How the cover is presented. `screenshot` (default) sits in browser chrome;
+   * `mark` is a logo or square artwork, shown centred on a tinted panel.
+   */
+  coverStyle?: "screenshot" | "mark";
   stack: string[];
   challenge: ProjectSection;
   approach: ProjectSection;
@@ -131,6 +136,7 @@ export const projects: Project[] = [
     intro:
       "A busy garage loses money two ways: empty bays, and a service advisor who spends half the day on the phone. OCH Planner gives customers self-serve online booking, and gives the shop a single schedule view of every bay, every day.",
     cover: "/OCHProject.png",
+    coverStyle: "mark",
     stack: ["Next.js", "React", "TypeScript", "Firebase", "Tailwind CSS"],
     challenge: {
       heading: "The challenge",
@@ -303,10 +309,22 @@ export const projects: Project[] = [
     gallery: [
       { src: "/CNMustang.png", alt: "Club de Natation Mustang home page", frame: "safari" },
     ],
+    featured: true,
   },
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
+
+/** What a project card renders — all that needs to reach a client component. */
+export type ProjectSummary = Pick<
+  Project,
+  "slug" | "title" | "name" | "year" | "category" | "summary" | "cover" | "coverStyle"
+>;
+
+export function toProjectSummary(project: Project): ProjectSummary {
+  const { slug, title, name, year, category, summary, cover, coverStyle } = project;
+  return { slug, title, name, year, category, summary, cover, coverStyle };
+}
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
@@ -335,8 +353,22 @@ export function getProjects(locale: Locale): Project[] {
   return locale === "fr" ? projectsFr : projects;
 }
 
+/**
+ * Order in which categories lead on the home page and the work index. Phiro
+ * sells websites first, so website work opens the grid and the deeper
+ * software follows as proof.
+ */
+const CATEGORY_PRIORITY: ProjectCategory[] = ["Website", "E-commerce", "Web App", "SaaS"];
+
+/** Stable sort: website work first, then by original order within a category. */
+export function byCategoryPriority(a: Project, b: Project): number {
+  return CATEGORY_PRIORITY.indexOf(a.category) - CATEGORY_PRIORITY.indexOf(b.category);
+}
+
 export function getFeaturedProjects(locale: Locale): Project[] {
-  return getProjects(locale).filter((p) => p.featured);
+  return getProjects(locale)
+    .filter((p) => p.featured)
+    .sort(byCategoryPriority);
 }
 
 export function getProjectFor(slug: string, locale: Locale): Project | undefined {
@@ -355,5 +387,8 @@ export function getNextProjectFor(slug: string, locale: Locale): Project {
  * union, NOT display labels — filtering must not depend on the active language.
  * The dictionary maps each key to a label at render time.
  */
-export const CATEGORY_KEYS = ["All", ...new Set(projects.map((p) => p.category))] as const;
+export const CATEGORY_KEYS = [
+  "All",
+  ...CATEGORY_PRIORITY.filter((category) => projects.some((p) => p.category === category)),
+] as const;
 export type CategoryKey = (typeof CATEGORY_KEYS)[number];

@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
+import { m, useScroll, useSpring } from "motion/react";
 
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useLocale } from "@/components/layout/locale-provider";
+import { useLiteMotion } from "@/components/motion/motion-provider";
 import { cn } from "@/lib/utils";
 
 interface ArticleRailProps {
@@ -22,7 +23,8 @@ interface ArticleRailProps {
  * which sections that covers.
  */
 export function ArticleRail({ items, targetRef }: ArticleRailProps) {
-  const reduced = useReducedMotion();
+  const lite = useLiteMotion();
+  const label = useLocale().dict.blog.onThisPage;
   const [activeId, setActiveId] = useState<string>(items[0]?.id ?? "");
 
   const { scrollYProgress } = useScroll({
@@ -31,13 +33,13 @@ export function ArticleRail({ items, targetRef }: ArticleRailProps) {
   });
 
   // Springing the raw progress keeps the fill from twitching on trackpad
-  // momentum. Skipped entirely when the reader has asked for reduced motion.
+  // momentum. Skipped in the lite motion tier.
   const smoothed = useSpring(scrollYProgress, {
     stiffness: 180,
     damping: 32,
     restDelta: 0.001,
   });
-  const progress = reduced ? scrollYProgress : smoothed;
+  const progress = lite ? scrollYProgress : smoothed;
 
   useEffect(() => {
     if (items.length === 0) return;
@@ -69,10 +71,10 @@ export function ArticleRail({ items, targetRef }: ArticleRailProps) {
     <>
       {/* Desktop: sticky rail beside the article. */}
       <nav
-        aria-label="On this page"
+        aria-label={label}
         className="sticky top-28 hidden max-h-[calc(100vh-9rem)] overflow-y-auto lg:block"
       >
-        <p className="eyebrow mb-5">On this page</p>
+        <p className="eyebrow mb-5">{label}</p>
 
         <div className="relative flex gap-4">
           {/* The spine. Track, then the gold fill scaled by reading progress. */}
@@ -80,9 +82,9 @@ export function ArticleRail({ items, targetRef }: ArticleRailProps) {
             aria-hidden="true"
             className="relative w-px shrink-0 self-stretch bg-line-strong"
           >
-            <motion.div
+            <m.div
               style={{ scaleY: progress, transformOrigin: "top" }}
-              className="absolute inset-0 w-px bg-gradient-to-b from-gold-deep via-gold to-gold-deep"
+              className="absolute inset-0 w-px bg-ink"
             />
           </div>
 
@@ -96,7 +98,7 @@ export function ArticleRail({ items, targetRef }: ArticleRailProps) {
                     aria-current={active ? "location" : undefined}
                     className={cn(
                       "block text-[0.8125rem] leading-snug transition-colors duration-300",
-                      active ? "text-gold" : "text-faint hover:text-dim"
+                      active ? "font-medium text-ink" : "text-muted hover:text-ink"
                     )}
                   >
                     {item.text}
@@ -109,20 +111,20 @@ export function ArticleRail({ items, targetRef }: ArticleRailProps) {
       </nav>
 
       {/* Mobile: a native disclosure. No JS, no focus trap to get wrong. */}
-      <details className="group mb-10 rounded-xl border border-line bg-surface/60 lg:hidden">
+      <details className="group mb-10 rounded-xl border border-line-strong bg-card lg:hidden">
         <summary className="flex cursor-pointer items-center justify-between px-4 py-3 marker:content-none">
-          <span className="eyebrow">On this page</span>
+          <span className="eyebrow">{label}</span>
           <span
             aria-hidden="true"
-            className="font-mono text-xs text-faint transition-transform duration-300 group-open:rotate-45"
+            className="font-mono text-xs text-muted transition-transform duration-300 group-open:rotate-45"
           >
             +
           </span>
         </summary>
-        <ul className="space-y-3 border-t border-line px-4 py-4">
+        <ul className="space-y-3 border-t border-line-strong px-4 py-4">
           {items.map((item) => (
             <li key={item.id}>
-              <a href={`#${item.id}`} className="text-sm text-dim hover:text-gold">
+              <a href={`#${item.id}`} className="text-sm text-muted hover:text-ink">
                 {item.text}
               </a>
             </li>
@@ -144,7 +146,7 @@ export function ArticleLayout({
   const articleRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-16">
+    <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-20">
       <div className="lg:order-1">
         <ArticleRail items={toc} targetRef={articleRef} />
       </div>

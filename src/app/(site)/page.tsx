@@ -6,5 +6,5 @@ import { HomeView } from "@/components/pages/home-view";
  * Metadata for `/` comes from the root layout.
  */
 export default function HomePage() {
-  return <HomeView />;
+  return <HomeView locale="en" />;
 }

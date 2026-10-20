@@ -15,6 +15,7 @@ export interface NavDict {
   home: string;
   about: string;
   work: string;
+  services: string;
   blog: string;
   contact: string;
   /** Accessible label for the locale toggle. */
@@ -70,10 +71,8 @@ export interface CommonDict {
 }
 
 export interface FooterDict {
-  ctaTitle: string;
-  ctaAccent: string;
-  site: string;
-  work: string;
+  studio: string;
+  services: string;
   contact: string;
 }
 

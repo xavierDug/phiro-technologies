@@ -4,7 +4,6 @@ import { ArticleLayout } from "@/components/blog/article-rail";
 import { PostFaq } from "@/components/blog/post-faq";
 import { Prose } from "@/components/blog/prose";
 import { RelatedPosts } from "@/components/blog/related-posts";
-import { CTA } from "@/components/sections/cta";
 import { JsonLd } from "@/components/seo/json-ld";
 import { relatedPosts } from "@/content/blog";
 import { readingMinutes, tableOfContents, wordCount } from "@/content/blog/types";
@@ -77,38 +76,25 @@ export function ArticleView({ post, locale }: { post: Post; locale: Locale }) {
           locale={locale}
         />
 
-        <div className="pt-16">
+        <div className="pt-20">
           <ArticleLayout toc={toc}>
             <Prose blocks={post.body} />
+            {post.faq && <PostFaq items={post.faq} dict={dict} />}
+            {post.tags.length > 0 && (
+              <ul className="mx-auto mt-14 flex w-full max-w-[44rem] flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <li key={tag} className="rounded-full border border-line-strong px-3.5 py-1.5 text-[0.8125rem] text-muted">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            )}
           </ArticleLayout>
         </div>
-
-        <div className="mx-auto max-w-3xl">
-          {post.faq && <PostFaq items={post.faq} dict={dict} />}
-          <ArticleCta dict={dict} locale={locale} />
-        </div>
-
-        {post.tags.length > 0 && (
-          <div className="mx-auto max-w-3xl px-6 pt-14">
-            <ul className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <li
-                  key={tag}
-                  className="rounded-full border border-line px-3 py-1 text-xs text-faint"
-                >
-                  {tag}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </article>
 
       <RelatedPosts posts={related} dict={dict} locale={locale} />
-
-      <div className="pt-24">
-        <CTA />
-      </div>
+      <ArticleCta dict={dict} locale={locale} />
     </>
   );
 }

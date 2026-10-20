@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { buildMetadata } from "@/lib/metadata";
 
-import { ContactPanel } from "@/components/sections/contact-panel";
+import { ContactPanel } from "@/components/contact/contact-panel";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
@@ -13,5 +13,5 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function ContactPage() {
-  return <ContactPanel />;
+  return <ContactPanel locale="en" />;
 }

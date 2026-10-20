@@ -11,92 +11,101 @@ import type { SectionsDict } from "@/content/dictionaries/sections.types";
  */
 export const sectionsFr: SectionsDict = {
   hero: {
-    badge: "Disponibles pour de nouveaux projets",
-    titleLead: "Conçu avec",
-    titleAccent: "intention",
-    lead: "Nous concevons et développons des logiciels intelligents et évolutifs pour des entreprises qui ont besoin qu'ils tiennent encore la route dans trois ans.",
-    scroll: "Défiler",
+    badge: "Studio web montréalais · Disponibles pour de nouveaux projets",
+    titleLead: "Des sites web qui vous amènent des",
+    titleAccent: "clients",
+    lead: "Phiro est un petit studio qui conçoit et développe des sites web rapides et clairs pour les entreprises qui ont besoin qu'ils travaillent — et les applications web derrière eux quand un site ne suffit plus.",
   },
-  stack: {
-    eyebrow: "Les outils que nous utilisons",
-    ariaLabel: "Technologies avec lesquelles nous travaillons",
+  clients: {
+    label: "Ils nous ont fait confiance",
+  },
+  intro: {
+    eyebrow: "Le studio",
+    statement:
+      "La plupart des sites d'entreprise ont l'air corrects et ne font rien. Nous bâtissons l'autre sorte : clairs sur ce que vous offrez, rapides sur un téléphone, faciles à mettre à jour pour votre équipe — et jugés aux demandes qu'ils vous amènent.",
+    link: "À propos du studio",
   },
   services: {
-    eyebrow: "Nos services",
-    title: "Des logiciels qui font leurs",
-    accent: "preuves",
+    eyebrow: "Services",
+    title: "Ce que nous pouvons faire",
+    accent: "pour vous",
     description:
-      "Quatre disciplines, une seule équipe. Nous menons un produit de la première question inconfortable jusqu'à la version sur laquelle les gens comptent.",
+      "Les sites web d'abord. Quand le site ne suffit plus, la même équipe bâtit le logiciel derrière.",
   },
   work: {
     eyebrow: "Réalisations choisies",
-    title: "Des projets qui parlent d'",
-    accent: "eux-mêmes",
+    title: "Projets",
+    accent: "récents",
     allProjects: "Tous les projets",
-  },
-  craft: {
-    eyebrow: "Le savoir-faire",
-    title: "Pensé pour chaque écran où il",
-    accent: "atterrit",
-    description:
-      "Une équipe, une base de code, un standard — que ça s'ouvre sur un portable au bureau ou sur un téléphone dans un atelier.",
-    points: [
-      "Conçu et développé par les mêmes personnes",
-      "Typé de bout en bout, de la base de données au bouton",
-      "Rapide sur un téléphone, sur de vrais réseaux",
-      "Livré documenté, pas abandonné",
-    ],
-    imageAlt: "Un tableau de bord Phiro sur un portable, une tablette et un téléphone",
-    cta: "Voir en production",
   },
   process: {
     eyebrow: "Notre façon de travailler",
     title: "Quatre étapes, sans",
     accent: "théâtre",
-    description:
-      "La même séquence à chaque mandat, qu'il s'agisse d'une page d'atterrissage ou d'une plateforme multilocataire.",
   },
-  testimonials: {
-    eyebrow: "Clients",
-    title: "Ce que c'est de travailler avec",
-    accent: "nous",
+  stats: {
+    ariaLabel: "Phiro en chiffres",
   },
-  mission: {
-    eyebrow: "Ce en quoi nous croyons",
-    title: "La technologie devrait paraître",
-    accent: "évidente",
-    description:
-      "Pas brillante. Pas impressionnante. Évidente — comme si le produit n'aurait raisonnablement pas pu fonctionner autrement. Y arriver, c'est tout le travail.",
+  testimonial: {
+    eyebrow: "La parole aux clients",
   },
-  journey: {
-    eyebrow: "Le chemin parcouru",
-    title: "Comment Phiro en est arrivée",
-    accent: "là",
-    description:
-      "Version courte : nous avons continué à refuser de livrer ce que nous n'aurions pas voulu maintenir.",
+  journal: {
+    eyebrow: "Blogue",
+    title: "Notes de",
+    accent: "chantier",
+    allArticles: "Tous les articles",
   },
   cta: {
     eyebrow: "Prochaine étape",
-    title: "Prêt à bâtir quelque chose de",
-    accent: "grand",
+    title: "Un projet en",
+    accent: "tête",
     description:
-      "Dites-nous ce que vous cherchez à réaliser. Nous vous dirons honnêtement si nous sommes les bonnes personnes pour le construire.",
-    emailUs: "Nous écrire directement",
+      "Dites-nous ce que vous cherchez à réaliser. Nous vous dirons honnêtement si nous sommes les bonnes personnes pour le bâtir.",
+    emailUs: "Nous écrire",
+  },
+  about: {
+    values: {
+      eyebrow: "Ce en quoi nous croyons",
+      title: "La technologie devrait paraître",
+      accent: "évidente",
+      description:
+        "Pas brillante. Pas impressionnante. Évidente — comme si le site n'aurait raisonnablement pas pu fonctionner autrement. Y arriver, c'est tout le travail.",
+    },
+    journey: {
+      eyebrow: "Le chemin parcouru",
+      title: "Comment Phiro en est arrivée",
+      accent: "là",
+      description:
+        "Version courte : nous avons continué à refuser de livrer ce que nous n'aurions pas voulu maintenir.",
+    },
+    team: {
+      eyebrow: "Avec qui vous travaillez",
+      title: "Vous parlez aux personnes qui le",
+      accent: "bâtissent",
+      description:
+        "Pas de chargé de compte, pas de transfert à une équipe junior. La personne qui cadre votre site le conçoit, écrit le code et répond quand quelque chose doit changer.",
+      name: "Xavier Dugal",
+      role: "Fondateur, Phiro Technologies",
+    },
+    stack: {
+      eyebrow: "Les outils que nous utilisons",
+    },
+    imageAlt: "Une séance de travail au studio, un portable ouvert sur le tableau de bord d'un client",
   },
   pages: {
     about: {
-      eyebrow: "À propos",
-      title: "Bâtir avec",
-      accent: "intention",
+      eyebrow: "À propos du studio",
+      title: "Un petit studio obsédé par les",
+      accent: "détails",
       description:
-        "Nous sommes une petite équipe qui prend au sérieux les parties ingrates — les frontières, les contrats, la deuxième année d'une base de code. C'est là que les bons produits se décident vraiment.",
+        "Nous prenons au sérieux les parties ingrates — la structure, la vitesse, la deuxième année d'un site. C'est là que les bons sites se décident vraiment, bien après l'annonce du lancement.",
     },
     projects: {
       eyebrow: "Réalisations",
       title: "Là où les idées deviennent",
       accent: "réelles",
       description:
-        "Du SaaS multilocataire aux sites produits interactifs. Chaque étude de cas raconte ce qui a été réellement difficile, pas seulement ce qui a été livré.",
+        "Des sites d'entreprises locales au SaaS multilocataire. Chaque étude de cas raconte ce qui a été réellement difficile, pas seulement ce qui a été livré.",
     },
     contact: {
       eyebrow: "Contact",
@@ -108,9 +117,19 @@ export const sectionsFr: SectionsDict = {
   },
   contact: {
     emailLabel: "Courriel",
+    phoneLabel: "Téléphone",
     basedIn: "Basés à",
     responseTime: "Délai de réponse",
-    reachDirectly: "Ou joignez-nous directement",
+  },
+  notFound: {
+    eyebrow: "Erreur 404",
+    title: "Cette page a pris un",
+    accent: "détour",
+    description:
+      "Le lien est peut-être ancien, ou la page a déménagé. Tout ce qui compte est à un clic.",
+    home: "Retour à l'accueil",
+    contact: "Dites-nous ce que vous cherchiez",
+    popular: "Pages populaires",
   },
   projectCategories: {
     All: "Tous",
@@ -121,12 +140,15 @@ export const sectionsFr: SectionsDict = {
   },
   projectCount: { one: "projet", other: "projets" },
   caseStudy: {
+    eyebrow: "Étude de cas",
+    allWork: "Toutes les réalisations",
     client: "Client",
     year: "Année",
     role: "Rôle",
     stack: "Technologies",
-    results: "Résultats",
+    results: "Le résultat",
     screens: "Écrans",
     next: "Étude de cas suivante",
+    visitSite: "Voir le site en ligne",
   },
 };

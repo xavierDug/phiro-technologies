@@ -1,8 +1,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { LocaleProvider } from "@/components/layout/locale-provider";
-import { ScrollProgress } from "@/components/ui/scroll-progress";
-import { Toaster } from "@/components/ui/sonner";
+import { MotionProvider } from "@/components/motion/motion-provider";
 import { blogSlugMap } from "@/content/blog";
 import { getDictionary } from "@/content/dictionaries";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -16,12 +15,10 @@ import { DEFAULT_LOCALE, HREFLANG, type Locale } from "@/lib/seo";
  * trees from drifting: there is one navbar, one footer, one place to change.
  * Campaign landing pages (och-planner) deliberately do not use it.
  *
- * The `lang` attribute goes on this wrapper rather than <html> because Next
- * allows only one root layout here, and a root layout cannot know which locale
- * is rendering without going dynamic. Per the HTML spec, `lang` on a subtree is
+ * The `lang` attribute goes on `<main>` rather than <html> because Next allows
+ * only one root layout here, and a root layout cannot know which locale is
+ * rendering without going dynamic. Per the HTML spec, `lang` on a subtree is
  * authoritative for that subtree — which is what assistive technology reads.
- * Google determines language from the content and the hreflang annotations, not
- * from this attribute, so the SEO signal is unaffected either way.
  */
 export function SiteChrome({
   locale,
@@ -37,19 +34,23 @@ export function SiteChrome({
 
   return (
     <LocaleProvider locale={locale} dict={dict} blogSlugMap={slugMap}>
-      {/* Declares the language of this tree. Rendered per locale rather than in
-          the root layout, which cannot know which one is active. */}
-      <JsonLd data={graph(websiteSchema(locale))} />
-      <ScrollProgress className="z-[70] h-[2px] bg-gradient-to-r from-gold-deep via-gold to-gold-deep" />
-      <Navbar />
-      <main
-        id="main"
-        {...(locale !== DEFAULT_LOCALE ? { lang: HREFLANG[locale] } : {})}
-      >
-        {children}
-      </main>
-      <Footer />
-      <Toaster position="bottom-right" />
+      <MotionProvider>
+        <JsonLd data={graph(websiteSchema(locale))} />
+        <a
+          href="#main"
+          className="sr-only z-[80] rounded-full bg-ink px-5 py-3 text-paper focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        >
+          {locale === "fr" ? "Aller au contenu" : "Skip to content"}
+        </a>
+        <Navbar />
+        <main
+          id="main"
+          {...(locale !== DEFAULT_LOCALE ? { lang: HREFLANG[locale] } : {})}
+        >
+          {children}
+        </main>
+        <Footer locale={locale} />
+      </MotionProvider>
     </LocaleProvider>
   );
 }

@@ -15,6 +15,7 @@ export const fr: Dictionary = {
     home: "Accueil",
     about: "À propos",
     work: "Réalisations",
+    services: "Services",
     blog: "Blogue",
     contact: "Contact",
     switchLanguage: "Switch to English",
@@ -56,10 +57,8 @@ export const fr: Dictionary = {
   sections: sectionsFr,
   form: formFr,
   footer: {
-    ctaTitle: "Construisons quelque chose",
-    ctaAccent: "qui dure",
-    site: "Site",
-    work: "Réalisations",
+    studio: "Studio",
+    services: "Services",
     contact: "Contact",
   },
   common: {

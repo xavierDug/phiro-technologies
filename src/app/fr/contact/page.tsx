@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ContactPanel } from "@/components/sections/contact-panel";
+import { ContactPanel } from "@/components/contact/contact-panel";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -12,5 +12,5 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function FrenchContactPage() {
-  return <ContactPanel />;
+  return <ContactPanel locale="fr" />;
 }

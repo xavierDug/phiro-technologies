@@ -1,23 +1,9 @@
-"use client";
-
-import { motion } from "motion/react";
-import { EASE } from "@/lib/motion";
-
 /**
- * Next remounts a template on every navigation, which gives us a route
- * transition without wiring AnimatePresence to the pathname by hand.
- *
- * Enter-only and short: a long exit animation makes a site feel slow, however
- * good it looks the first time.
+ * Next remounts a template on every navigation, which gives a route transition
+ * for free. The fade is a CSS animation (`.page-in` in globals.css) rather than
+ * a motion component: it plays on first paint without waiting for hydration,
+ * so it never delays the largest contentful paint.
  */
 export default function SiteTemplate({ children }: { children: React.ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: EASE }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className="page-in">{children}</div>;
 }

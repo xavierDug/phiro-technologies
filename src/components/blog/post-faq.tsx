@@ -17,33 +17,28 @@ export function PostFaq({ items, dict }: { items: FAQ[]; dict: Dictionary }) {
   return (
     <section
       aria-labelledby="faq-heading"
-      className="mx-auto w-full max-w-[68ch] px-6 pt-20 sm:px-0"
+      className="mx-auto w-full max-w-[44rem] pt-20"
     >
-      <div className="mb-8 flex items-center gap-3">
-        <span aria-hidden="true" className="h-px w-8 bg-gold/50" />
-        <span className="eyebrow">{dict.blog.faqEyebrow}</span>
-      </div>
-
-      <h2 id="faq-heading" className="text-[clamp(1.7rem,3.2vw,2.35rem)]">
-        {dict.blog.faqTitle}
-        <span className="text-gold">.</span>
+      <p className="eyebrow mb-5">{dict.blog.faqEyebrow}</p>
+      <h2 id="faq-heading" className="text-[clamp(1.75rem,3vw,2.25rem)] tracking-[-0.03em]">
+        {dict.blog.faqTitle}.
       </h2>
 
-      <div className="mt-8 divide-y divide-line border-y border-line">
+      <div className="mt-8 divide-y divide-line-strong border-y border-line-strong">
         {items.map((item) => (
           <details key={item.question} className="group">
             <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 marker:content-none">
-              <h3 className="text-[1.0625rem] font-normal leading-snug tracking-normal text-text transition-colors group-hover:text-gold">
+              <h3 className="font-sans text-[1.0625rem] leading-snug font-medium tracking-normal text-ink">
                 {item.question}
               </h3>
               <span
                 aria-hidden="true"
-                className="mt-0.5 shrink-0 font-mono text-sm text-faint transition-transform duration-300 group-open:rotate-45"
+                className="mt-0.5 shrink-0 font-mono text-sm text-muted transition-transform duration-300 group-open:rotate-45"
               >
                 +
               </span>
             </summary>
-            <p className="pb-6 pr-10 text-[1rem] leading-[1.75] text-text/70">
+            <p className="pb-6 pr-10 text-base leading-[1.75] text-ink-soft">
               <Inline text={item.answer} />
             </p>
           </details>

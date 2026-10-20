@@ -1,14 +1,15 @@
 import { PageHero } from "@/components/sections/page-hero";
-import { ProjectIndex } from "@/components/sections/project-index";
-import { CTA } from "@/components/sections/cta";
+import { ProjectIndex } from "@/components/projects/project-index";
+import { ClosingCta } from "@/components/sections/closing-cta";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getDictionary } from "@/content/dictionaries";
+import { byCategoryPriority, CATEGORY_KEYS, getProjects, toProjectSummary } from "@/content/projects";
 import { breadcrumbSchema, graph } from "@/lib/schema";
 import type { Locale } from "@/lib/seo";
 
 export function ProjectsView({ locale }: { locale: Locale }) {
-  const dict = getDictionary(locale);
-  const copy = dict.sections.pages.projects;
+  const copy = getDictionary(locale).sections.pages.projects;
+  const projects = [...getProjects(locale)].sort(byCategoryPriority).map(toProjectSummary);
 
   return (
     <>
@@ -23,14 +24,9 @@ export function ProjectsView({ locale }: { locale: Locale }) {
           )
         )}
       />
-      <PageHero
-        eyebrow={copy.eyebrow}
-        title={copy.title}
-        accent={copy.accent}
-        description={copy.description ?? ""}
-      />
-      <ProjectIndex />
-      <CTA />
+      <PageHero eyebrow={copy.eyebrow} title={copy.title} accent={copy.accent} description={copy.description} />
+      <ProjectIndex projects={projects} categories={CATEGORY_KEYS} />
+      <ClosingCta locale={locale} />
     </>
   );
 }

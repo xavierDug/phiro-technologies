@@ -1,144 +1,94 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
-import { FaLinkedin } from "react-icons/fa";
 
-import ScrollVelocity from "@/components/ui/ScrollVelocity";
-import { FlickeringGrid } from "@/components/ui/flickering-grid";
-import { contactDetails, buildNavLinks } from "@/content/site";
-import { projects } from "@/content/projects";
-import { useLocale } from "@/components/layout/locale-provider";
-import { localePath, SOCIAL_PROFILES } from "@/lib/seo";
+import { LocaleSwitcher } from "@/components/layout/locale-switcher";
+import { buildNavLinks } from "@/content/navigation";
+import { contactDetails, getSiteContent } from "@/content/site";
+import { getDictionary } from "@/content/dictionaries";
+import { localePath, SOCIAL_PROFILES, type Locale } from "@/lib/seo";
 
-export function Footer() {
-  const year = new Date().getFullYear();
-  const { locale, dict } = useLocale();
+const COLUMN_LABEL = "mb-2 font-mono text-xs uppercase tracking-[0.14em] text-on-ink-faint";
+const LINK = "transition-colors duration-300 hover:text-gold";
+
+/**
+ * Server component: the footer is static text, so it ships no JavaScript of
+ * its own (the language toggle is the one client island inside it).
+ */
+export function Footer({ locale }: { locale: Locale }) {
+  const dict = getDictionary(locale);
+  const { services } = getSiteContent(locale);
   const navLinks = buildNavLinks(dict, locale);
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-ink">
-      <FlickeringGrid
-        className="pointer-events-none absolute inset-0 [mask-image:radial-gradient(70%_60%_at_50%_0%,black,transparent)]"
-        squareSize={3}
-        gridGap={8}
-        color="#f5c843"
-        maxOpacity={0.12}
-        flickerChance={0.08}
-      />
+    <footer className="overflow-hidden bg-ink text-on-ink">
+      <div className="mx-auto max-w-7xl px-5 sm:px-10">
+        <div className="grid gap-12 border-t border-line-on-ink py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr]">
+          <Link
+            href={localePath("/", locale)}
+            aria-label="Phiro Technologies"
+            className="flex items-start gap-2.5 self-start"
+          >
+            <Image src="/PhiroTechnoNoText.png" alt="" width={26} height={26} />
+            <span className="font-display text-[1.0625rem] font-semibold tracking-[0.16em]">PHIRO</span>
+          </Link>
 
-      <div className="relative mx-auto max-w-6xl px-6 pt-24">
-        <div className="grid gap-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div>
-            <h2 className="max-w-xs text-3xl">
-              {dict.footer.ctaTitle}{" "}
-              <span className="accent-serif">{dict.footer.ctaAccent}</span>.
-            </h2>
-            <Link
-              href={localePath("/contact", locale)}
-              className="group mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-[#ffd75e]"
-            >
-              {dict.common.startProject}
-              <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <nav aria-label={dict.footer.studio} className="flex flex-col gap-3 text-[0.9375rem]">
+            <p className={COLUMN_LABEL}>{dict.footer.studio}</p>
+            {navLinks
+              .filter((link) => !link.href.includes("#"))
+              .map((link) => (
+                <Link key={link.href} href={link.href} className={LINK}>
+                  {link.label}
+                </Link>
+              ))}
+            <Link href={localePath("/contact", locale)} className={LINK}>
+              {dict.nav.contact}
             </Link>
-          </div>
-
-          <nav aria-label={dict.footer.site}>
-            <p className="eyebrow mb-5">{dict.footer.site}</p>
-            <ul className="space-y-3">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-dim transition-colors hover:text-gold"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </nav>
 
-          <nav aria-label={dict.footer.work}>
-            <p className="eyebrow mb-5">{dict.footer.work}</p>
-            <ul className="space-y-3">
-              {projects.slice(0, 4).map((project) => (
-                <li key={project.slug}>
-                  <Link
-                    href={localePath(`/projects/${project.slug}`, locale)}
-                    className="text-sm text-dim transition-colors hover:text-gold"
-                  >
-                    {project.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <nav aria-label={dict.footer.services} className="flex flex-col gap-3 text-[0.9375rem]">
+            <p className={COLUMN_LABEL}>{dict.footer.services}</p>
+            {services.slice(0, 4).map((service) => (
+              <Link key={service.index} href={localePath("/#services", locale)} className={LINK}>
+                {service.title}
+              </Link>
+            ))}
           </nav>
 
-          {/* Name / Address / Phone. These strings are the ones Google matches
-              against the Business Profile, so they come from BUSINESS in
-              lib/seo.ts rather than being retyped here. */}
-          <div>
-            <p className="eyebrow mb-5">{dict.footer.contact}</p>
-            <ul className="space-y-3 text-sm text-dim">
-              <li>
-                <a
-                  href={`mailto:${contactDetails.email}`}
-                  className="inline-flex items-center gap-2 transition-colors hover:text-gold"
-                >
-                  <Mail className="size-4 shrink-0" />
-                  {contactDetails.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contactDetails.phoneHref}
-                  className="inline-flex items-center gap-2 transition-colors hover:text-gold"
-                >
-                  <Phone className="size-4 shrink-0" />
-                  {contactDetails.phone}
-                </a>
-              </li>
-              <li className="inline-flex items-center gap-2">
-                <MapPin className="size-4 shrink-0" />
-                {contactDetails.location}
-              </li>
-            </ul>
-            <div className="mt-6 flex gap-3">
-              <a
-                href={SOCIAL_PROFILES[0]}
-                aria-label="LinkedIn"
-                target="_blank"
-                rel="noreferrer noopener"
-                className="grid size-9 place-items-center rounded-full border border-line text-dim transition-colors hover:border-gold hover:text-gold"
-              >
-                <FaLinkedin className="size-4" />
-              </a>
-            </div>
+          <div className="flex flex-col gap-3 text-[0.9375rem]">
+            <p className={COLUMN_LABEL}>{dict.footer.contact}</p>
+            <a href={`mailto:${contactDetails.email}`} className={LINK}>
+              {contactDetails.email}
+            </a>
+            <a href={contactDetails.phoneHref} className={LINK}>
+              {contactDetails.phone}
+            </a>
+            <span className="text-on-ink-muted">{contactDetails.locality}</span>
+            <a href={SOCIAL_PROFILES[0]} target="_blank" rel="noreferrer noopener" className={LINK}>
+              LinkedIn
+            </a>
           </div>
-        </div>
-
-        {/* Oversized wordmark that reacts to scroll velocity — the last thing
-            you see, and the only place the brand is set this large. */}
-        <div className="mt-24 select-none" aria-hidden="true">
-          <ScrollVelocity
-            texts={["PHIRO TECHNOLOGIES —", "PURPOSE, ENGINEERED —"]}
-            velocity={40}
-            numCopies={6}
-            className="font-display text-[clamp(3rem,10vw,8rem)] leading-none tracking-tight text-white/[0.06]"
-            parallaxClassName="py-1"
-          />
-        </div>
-
-        <div className="mt-12 flex flex-col gap-4 border-t border-line py-8 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year} Phiro Technologies. {dict.common.allRightsReserved}
-          </p>
-          <p className="font-mono tracking-[0.18em] uppercase">
-            {dict.common.tagline}
-          </p>
         </div>
       </div>
+
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 border-t border-line-on-ink px-5 py-7 text-[0.8125rem] text-on-ink-faint sm:px-10">
+        <p>
+          © {year} Phiro Technologies. {dict.common.allRightsReserved}
+        </p>
+        <p>{dict.common.tagline}.</p>
+        <LocaleSwitcher className="text-on-ink-faint hover:text-on-ink" />
+      </div>
+
+      {/* The only place the brand is set this large. Decorative (the name is
+          already in the logo above), so it is generated content rather than
+          text; its descender is cropped by the footer's bottom edge so it reads
+          as the page running out, not as a heading. */}
+      <div
+        aria-hidden="true"
+        data-text="phiro"
+        className="-mb-[0.22em] select-none text-center font-display text-[clamp(7rem,26vw,24rem)] leading-[0.82] font-medium tracking-[-0.06em] whitespace-nowrap text-on-ink/[0.07] before:content-[attr(data-text)]"
+      />
     </footer>
   );
 }

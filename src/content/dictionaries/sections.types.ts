@@ -6,44 +6,54 @@
  * dictionary interface is harder to diff than two focused ones.
  *
  * Every heading here follows the site's one headline pattern: a plain `title`
- * fragment, then a single serif-italic `accent` word. Translations must keep
- * that shape — a French accent word that is three words long breaks the
- * typographic rhythm the whole page is built on.
+ * fragment, then a single serif-italic `accent` word (with the gold
+ * highlighter), then an optional `titleEnd`. Translations must keep that shape —
+ * a French accent of three words breaks the rhythm the whole page is built on.
  */
 
 export interface HeadingCopy {
   eyebrow: string;
   title: string;
   accent: string;
+  /** Plain text after the accent word, before the closing punctuation. */
+  titleEnd?: string;
   description?: string;
 }
 
 export interface SectionsDict {
   hero: {
     badge: string;
-    /** First line, plain. */
     titleLead: string;
-    /** Second line, serif italic gold. */
+    /** The accent word, set in serif italic over the gold highlighter. */
     titleAccent: string;
     lead: string;
-    scroll: string;
   };
-  stack: {
+  clients: {
+    label: string;
+  };
+  intro: {
     eyebrow: string;
-    ariaLabel: string;
+    statement: string;
+    link: string;
   };
   services: HeadingCopy;
   work: HeadingCopy & { allProjects: string };
-  craft: HeadingCopy & {
-    points: string[];
-    imageAlt: string;
-    cta: string;
-  };
   process: HeadingCopy;
-  testimonials: HeadingCopy;
-  mission: HeadingCopy;
-  journey: HeadingCopy;
+  stats: {
+    ariaLabel: string;
+  };
+  testimonial: {
+    eyebrow: string;
+  };
+  journal: HeadingCopy & { allArticles: string };
   cta: HeadingCopy & { emailUs: string };
+  about: {
+    values: HeadingCopy;
+    journey: HeadingCopy;
+    team: HeadingCopy & { name: string; role: string };
+    stack: { eyebrow: string };
+    imageAlt: string;
+  };
   /** Page heroes for the interior routes. */
   pages: {
     about: HeadingCopy;
@@ -52,15 +62,22 @@ export interface SectionsDict {
   };
   contact: {
     emailLabel: string;
+    phoneLabel: string;
     basedIn: string;
     responseTime: string;
-    reachDirectly: string;
+  };
+  notFound: HeadingCopy & {
+    home: string;
+    contact: string;
+    popular: string;
   };
   /** Display labels for the projects-index filter. Keys are ProjectCategory. */
   projectCategories: Record<string, string>;
   /** Count suffix under the projects filter. */
   projectCount: { one: string; other: string };
   caseStudy: {
+    eyebrow: string;
+    allWork: string;
     client: string;
     year: string;
     role: string;
@@ -68,5 +85,6 @@ export interface SectionsDict {
     results: string;
     screens: string;
     next: string;
+    visitSite: string;
   };
 }
