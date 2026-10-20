@@ -51,6 +51,13 @@ const SHOTS: Shot[] = [
   },
 ];
 
+/** Phone layout, back to front: the hero shot (Soudure FLF) sits in front. */
+const PHONE_DECK = [
+  { shot: SHOTS[0], place: "-left-[2%] z-[1] w-[60%]", rotate: -5, delay: 640 },
+  { shot: SHOTS[1], place: "-right-[2%] z-[2] w-[60%] mt-[7%]", rotate: 4, delay: 760 },
+  { shot: SHOTS[2], place: "", rotate: 0, delay: 520 },
+];
+
 /**
  * Each transform lives on its own wrapper so they never fight: parallax drift
  * (motion value) outside, CSS entrance inside it, resting tilt inside that,
@@ -104,21 +111,36 @@ export function HeroStage() {
         ))}
       </div>
 
-      {/* Phone: two frames, offset, no parallax. */}
-      <div className="flex gap-3 md:hidden">
-        {[SHOTS[2], SHOTS[0]].map((shot, i) => (
-          <BrowserFrame key={shot.src} className={cn("flex-1 fade-up", i === 1 && "mt-10")}>
-            <Image
-              src={shot.src}
-              alt={shot.alt}
-              width={600}
-              height={800}
-              priority={i === 0}
-              sizes="50vw"
-              className="aspect-[3/4] w-full object-cover object-left-top"
-            />
-          </BrowserFrame>
-        ))}
+      {/* Phone: the same three sites as a fanned deck, each at the
+          screenshots' native 16:9 so nothing is squeezed or cropped. The two
+          back frames peek out above the front one instead of sitting side by
+          side. */}
+      <div className="relative pt-[33%] md:hidden">
+        {PHONE_DECK.map(({ shot, place, rotate, delay }, i) => {
+          const front = i === PHONE_DECK.length - 1;
+          return (
+            <div
+              key={shot.src}
+              className={cn(front ? "relative z-[3] mx-auto w-[90%]" : "absolute top-0", place)}
+            >
+              <div className="fade-up" style={{ "--delay": `${delay}ms` } as React.CSSProperties}>
+                <div style={{ transform: `rotate(${rotate}deg)` }}>
+                  <BrowserFrame>
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      width={1200}
+                      height={900}
+                      priority={front}
+                      sizes={front ? "90vw" : "60vw"}
+                      className="aspect-[16/9] w-full object-cover object-left-top"
+                    />
+                  </BrowserFrame>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

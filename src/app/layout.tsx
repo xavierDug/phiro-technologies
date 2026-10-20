@@ -123,6 +123,8 @@ export default function RootLayout({
   return (
     <html
       lang={HREFLANG[DEFAULT_LOCALE]}
+      // IntroCurtain's boot script sets data-intro before hydration.
+      suppressHydrationWarning
       className={`${geist.variable} ${geistMono.variable} ${displaySans.variable} ${instrumentSerif.variable}`}
     >
       <body className="bg-paper font-sans text-ink antialiased">

@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { IntroCurtain } from "@/components/layout/intro-curtain";
 import { LocaleProvider } from "@/components/layout/locale-provider";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { blogSlugMap } from "@/content/blog";
@@ -35,6 +36,7 @@ export function SiteChrome({
   return (
     <LocaleProvider locale={locale} dict={dict} blogSlugMap={slugMap}>
       <MotionProvider>
+        <IntroCurtain />
         <JsonLd data={graph(websiteSchema(locale))} />
         <a
           href="#main"
