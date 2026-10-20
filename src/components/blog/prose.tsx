@@ -18,11 +18,11 @@ import { cn } from "@/lib/utils";
  * all short enough that they never had to solve this.
  */
 
-const MEASURE = "mx-auto w-full max-w-[68ch]";
+const MEASURE = "mx-auto w-full max-w-[44rem]";
 
 export function Prose({ blocks }: { blocks: Block[] }) {
   return (
-    <div className="text-[1.0625rem] leading-[1.8] text-text/75 sm:text-[1.125rem]">
+    <div className="text-[1.0625rem] leading-[1.75] text-ink-soft sm:text-[1.1875rem]">
       {blocks.map((block, i) => (
         <BlockView key={i} block={block} />
       ))}
@@ -47,7 +47,7 @@ function BlockView({ block }: { block: Block }) {
             id={block.id}
             className={cn(
               MEASURE,
-              "mt-16 scroll-mt-28 text-[clamp(1.7rem,3.2vw,2.35rem)] text-text"
+              "mt-16 scroll-mt-28 text-[clamp(1.75rem,3vw,2.25rem)] leading-[1.12] tracking-[-0.03em] text-ink"
             )}
           >
             {block.text}
@@ -57,7 +57,7 @@ function BlockView({ block }: { block: Block }) {
       return (
         <h3
           id={block.id}
-          className={cn(MEASURE, "mt-10 scroll-mt-28 text-[1.3rem] text-text")}
+          className={cn(MEASURE, "mt-10 scroll-mt-28 text-[1.375rem] tracking-[-0.02em] text-ink")}
         >
           {block.text}
         </h3>
@@ -79,12 +79,12 @@ function BlockView({ block }: { block: Block }) {
               {block.ordered ? (
                 <span
                   aria-hidden="true"
-                  className="absolute left-0 top-[0.15em] font-mono text-xs text-gold [counter-increment:step] before:content-[counter(step)]"
+                  className="absolute left-0 top-[0.2em] font-mono text-sm text-muted [counter-increment:step] before:content-[counter(step)]"
                 />
               ) : (
                 <span
                   aria-hidden="true"
-                  className="absolute left-1 top-[0.72em] size-1.5 rounded-full bg-gold/60"
+                  className="absolute left-1 top-[0.7em] size-1.5 rounded-full bg-ink"
                 />
               )}
               <Inline text={item} />
@@ -97,18 +97,18 @@ function BlockView({ block }: { block: Block }) {
     case "code":
       return (
         <figure className={cn(MEASURE, "mt-8")}>
-          <div className="overflow-hidden rounded-xl border border-line bg-surface-2">
-            <div className="flex items-center justify-between border-b border-line px-4 py-2">
-              <span className="eyebrow !text-[0.625rem]">{block.lang}</span>
-              <span aria-hidden="true" className="h-px w-8 bg-gold/40" />
+          <div className="overflow-hidden rounded-xl bg-ink text-on-ink">
+            <div className="flex items-center justify-between border-b border-line-on-ink px-5 py-2.5">
+              <span className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-on-ink-muted">{block.lang}</span>
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-gold" />
             </div>
             {/* Own scroll container: a wide line must never make the page scroll. */}
-            <pre className="overflow-x-auto px-4 py-4 text-[0.8125rem] leading-relaxed">
-              <code className="font-mono text-text/85">{block.code}</code>
+            <pre className="overflow-x-auto px-5 py-5 text-[0.8125rem] leading-relaxed">
+              <code className="font-mono text-on-ink">{block.code}</code>
             </pre>
           </div>
           {block.caption && (
-            <figcaption className="mt-3 text-sm text-faint">{block.caption}</figcaption>
+            <figcaption className="mt-3 text-sm text-muted">{block.caption}</figcaption>
           )}
         </figure>
       );
@@ -129,29 +129,29 @@ function BlockView({ block }: { block: Block }) {
         <aside
           className={cn(
             MEASURE,
-            "mt-8 overflow-hidden rounded-xl border bg-surface-2",
-            warn ? "border-destructive/25" : "border-line"
+            "mt-8 overflow-hidden rounded-xl border bg-card",
+            warn ? "border-error/30" : "border-line-strong"
           )}
         >
           <div
             className={cn(
               "flex items-center justify-between border-b px-4 py-2.5",
-              warn ? "border-destructive/20" : "border-line"
+              warn ? "border-error/20" : "border-line"
             )}
           >
             <span className="flex items-center gap-2">
               <Icon
-                className={cn("size-3.5 shrink-0", warn ? "text-destructive" : "text-gold")}
+                className={cn("size-3.5 shrink-0", warn ? "text-error" : "text-ink")}
                 aria-hidden="true"
               />
               {block.title && <span className="eyebrow">{block.title}</span>}
             </span>
             <span
               aria-hidden="true"
-              className={cn("h-px w-8", warn ? "bg-destructive/40" : "bg-gold/40")}
+              className={cn("size-1.5 rounded-full", warn ? "bg-error" : "bg-gold")}
             />
           </div>
-          <p className="px-4 py-4 text-[0.975rem] leading-relaxed text-text/75">
+          <p className="px-5 py-4 text-base leading-relaxed text-ink-soft">
             <Inline text={block.text} />
           </p>
         </aside>
@@ -161,15 +161,13 @@ function BlockView({ block }: { block: Block }) {
     case "quote":
       return (
         <figure className={cn(MEASURE, "mt-10")}>
-          <blockquote className="border-l-2 border-gold/50 pl-6">
-            <p className="accent-serif !not-italic text-[clamp(1.3rem,2.4vw,1.7rem)] leading-snug text-text">
-              <span className="accent-serif">&ldquo;</span>
-              {block.text}
-              <span className="accent-serif">&rdquo;</span>
+          <blockquote>
+            <p className="font-serif text-[clamp(1.6rem,2.8vw,2.1rem)] leading-[1.2] text-ink">
+              &ldquo;{block.text}&rdquo;
             </p>
           </blockquote>
           {block.cite && (
-            <figcaption className="mt-3 pl-6 text-sm text-faint">
+            <figcaption className="mt-3 text-sm text-muted">
               — {block.cite}
             </figcaption>
           )}
@@ -181,7 +179,7 @@ function BlockView({ block }: { block: Block }) {
         <figure className="mt-10">
           {/* Breaks the measure on purpose: figures read better slightly wider
               than the text column they interrupt. */}
-          <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-xl border border-line bg-surface">
+          <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-xl border border-line bg-card">
             <Image
               src={block.src}
               alt={block.alt}
@@ -192,7 +190,7 @@ function BlockView({ block }: { block: Block }) {
             />
           </div>
           {block.caption && (
-            <figcaption className={cn(MEASURE, "mt-3 text-sm text-faint")}>
+            <figcaption className={cn(MEASURE, "mt-3 text-sm text-muted")}>
               {block.caption}
             </figcaption>
           )}
@@ -202,15 +200,15 @@ function BlockView({ block }: { block: Block }) {
     case "table":
       return (
         <figure className={cn(MEASURE, "mt-8")}>
-          <div className="overflow-x-auto rounded-xl border border-line">
+          <div className="overflow-x-auto rounded-xl border border-line-strong bg-card">
             <table className="w-full border-collapse text-left text-[0.9375rem]">
               <thead>
-                <tr className="border-b border-line bg-surface-2">
+                <tr className="border-b border-line-strong bg-panel">
                   {block.head.map((cell) => (
                     <th
                       key={cell}
                       scope="col"
-                      className="px-4 py-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-faint"
+                      className="px-4 py-3 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted"
                     >
                       {cell}
                     </th>
@@ -224,8 +222,8 @@ function BlockView({ block }: { block: Block }) {
                       <td
                         key={j}
                         className={cn(
-                          "px-4 py-3 align-top text-text/75",
-                          j === 0 && "text-text/90"
+                          "px-4 py-3 align-top text-ink-soft",
+                          j === 0 && "text-ink"
                         )}
                       >
                         <Inline text={cell} />
@@ -237,12 +235,12 @@ function BlockView({ block }: { block: Block }) {
             </table>
           </div>
           {block.caption && (
-            <figcaption className="mt-3 text-sm text-faint">{block.caption}</figcaption>
+            <figcaption className="mt-3 text-sm text-muted">{block.caption}</figcaption>
           )}
         </figure>
       );
 
     case "divider":
-      return <div className={cn(MEASURE, "rule-gold my-14")} aria-hidden="true" />;
+      return <hr className={cn(MEASURE, "my-14 border-line-strong")} />;
   }
 }

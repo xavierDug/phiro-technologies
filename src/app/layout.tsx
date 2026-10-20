@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter_Tight, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/layout/theme-provider";
 import { JsonLd } from "@/components/seo/json-ld";
 import { graph, organizationSchema } from "@/lib/schema";
 import {
@@ -26,15 +25,15 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-/** Display face: tight, confident grotesk. Carries every headline. */
+/** Display face: a tight grotesk set at medium weight. Carries every headline. */
 const displaySans = Inter_Tight({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["500", "600"],
   variable: "--font-display-sans",
   display: "swap",
 });
 
-/** Used only for the single italic accent word inside a headline. */
+/** Used for the single italic accent word inside a headline, and pull quotes. */
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
@@ -112,8 +111,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050506",
-  colorScheme: "dark",
+  themeColor: "#f6f4ef",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -125,15 +124,14 @@ export default function RootLayout({
     <html
       lang={HREFLANG[DEFAULT_LOCALE]}
       className={`${geist.variable} ${geistMono.variable} ${displaySans.variable} ${instrumentSerif.variable}`}
-      suppressHydrationWarning
     >
-      <body className="bg-ink text-text font-sans antialiased">
+      <body className="bg-paper font-sans text-ink antialiased">
         {/* The Organization node is locale-independent and carries a stable @id
             that article and breadcrumb nodes reference, so it belongs here.
             The WebSite node is emitted by SiteChrome instead — it declares
             inLanguage, which only the locale layout knows. */}
         <JsonLd data={graph(organizationSchema())} />
-        <ThemeProvider>{children}</ThemeProvider>
+        {children}
       </body>
     </html>
   );

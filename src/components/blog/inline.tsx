@@ -28,7 +28,7 @@ export function Inline({ text }: { text: string }): ReactNode {
 
     if (bold !== undefined) {
       nodes.push(
-        <strong key={key++} className="font-medium text-text">
+        <strong key={key++} className="font-semibold text-ink">
           {bold}
         </strong>
       );
@@ -36,7 +36,7 @@ export function Inline({ text }: { text: string }): ReactNode {
       nodes.push(
         <code
           key={key++}
-          className="rounded-[4px] border border-line bg-surface-2 px-[0.4em] py-[0.15em] font-mono text-[0.85em] text-gold"
+          className="rounded-[5px] bg-panel px-[0.4em] py-[0.15em] font-mono text-[0.85em] text-ink"
         >
           {code}
         </code>
@@ -56,7 +56,7 @@ export function Inline({ text }: { text: string }): ReactNode {
 }
 
 const LINK_CLASS =
-  "text-text underline decoration-gold/40 underline-offset-[3px] transition-colors hover:text-gold hover:decoration-gold";
+  "text-ink underline decoration-line-strong underline-offset-[3px] transition-colors hover:decoration-ink";
 
 function InlineLink({ href, label }: { href: string; label: string }) {
   // Internal links go through next/link so they prefetch and keep the SPA

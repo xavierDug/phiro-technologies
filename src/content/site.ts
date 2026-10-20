@@ -1,14 +1,13 @@
 /**
- * Site-wide content: services, process, stack, testimonials, navigation.
+ * Site-wide content: services, process, stack, testimonials. Navigation lives
+ * in `content/navigation.ts`.
  *
  * Kept as typed data rather than JSX so sections stay presentational and the
  * same content can feed more than one layout — the same pattern used by
  * `och-planner/_content/offer.ts`.
  */
 
-import type { Dictionary } from "@/content/dictionaries/types";
-import { en } from "@/content/dictionaries/en";
-import { BUSINESS, localePath, type Locale } from "@/lib/seo";
+import { BUSINESS, type Locale } from "@/lib/seo";
 import {
   journeyFr,
   processStepsFr,
@@ -17,33 +16,6 @@ import {
   testimonialsFr,
   valuesFr,
 } from "@/content/site.fr";
-
-export interface NavLink {
-  href: string;
-  label: string;
-}
-
-/**
- * Navigation as structure, not strings: the path is fixed, the label comes from
- * the active dictionary. Adding a locale therefore cannot forget a nav item.
- */
-const NAV_ITEMS = [
-  { key: "home", path: "/" },
-  { key: "about", path: "/about" },
-  { key: "work", path: "/projects" },
-  { key: "blog", path: "/blog" },
-  { key: "contact", path: "/contact" },
-] as const satisfies readonly { key: keyof Dictionary["nav"]; path: string }[];
-
-export function buildNavLinks(dict: Dictionary, locale: Locale): NavLink[] {
-  return NAV_ITEMS.map((item) => ({
-    href: localePath(item.path, locale),
-    label: dict.nav[item.key],
-  }));
-}
-
-/** English default, kept for components that have no locale in scope yet. */
-export const navLinks: NavLink[] = buildNavLinks(en, "en");
 
 /**
  * Published contact details.
@@ -59,65 +31,67 @@ export const contactDetails = {
   phone: BUSINESS.telephone,
   phoneHref: `tel:${BUSINESS.telephoneE164}`,
   location: `${BUSINESS.addressLocality}, ${BUSINESS.addressRegion}, Canada`,
+  locality: `${BUSINESS.addressLocality}, ${BUSINESS.addressRegion}`,
   responseTime: "Within one business day",
 };
 
+/**
+ * Clients named on the home page. Proper nouns, not translated. Only list a
+ * client here with their agreement to be named.
+ */
+export const clients: string[] = [
+  "Optimum Car Health",
+  "Soudure FLF",
+  "Club de Natation Mustang",
+  "Team OT13",
+];
+
 export interface Service {
-  /** Stable key, also used to look up the card's graphic. */
+  /** Stable key and the number shown beside the row. */
   index: string;
-  /** One word, set in mono above the title. */
-  eyebrow: string;
   title: string;
-  /**
-   * Kept to two lines. The bento card gives copy a small frosted panel over a
-   * large graphic — the graphic carries the weight, so anything longer than
-   * this overflows and makes the grid feel cramped.
-   */
+  /** One or two sentences. */
   description: string;
-  /** Columns out of six. Row one is 3+3, row two is 2+2+2. */
-  span: 3 | 2;
+  /** Two short deliverable labels, set in mono on the right of the row. */
+  tags: [string, string];
 }
 
+/** Websites lead; the software work follows as the deeper offer. */
 export const services: Service[] = [
   {
     index: "01",
-    eyebrow: "Platforms",
-    title: "Product & SaaS engineering",
+    title: "Marketing websites",
     description:
-      "Multi-tenant platforms, billing and dashboards — built to survive their second year, not just their launch.",
-    span: 3,
+      "Fast, distinctive sites your team can actually edit — built around the one action you need visitors to take.",
+    tags: ["Next.js · WordPress", "Copy & structure"],
   },
   {
     index: "02",
-    eyebrow: "Applications",
-    title: "Web applications",
+    title: "Web design",
     description:
-      "Internal tools and customer-facing apps that replace the spreadsheet the business quietly runs on.",
-    span: 3,
+      "Interface and visual design that starts from the daily loop your customers are already in, not from a template.",
+    tags: ["UI design", "Design systems"],
   },
   {
     index: "03",
-    eyebrow: "Websites",
-    title: "Marketing sites",
+    title: "SEO & performance",
     description:
-      "Fast, distinctive sites your team can actually edit.",
-    span: 2,
+      "Technical SEO, structured data and Core Web Vitals — the faults nobody sees until the traffic stops arriving.",
+    tags: ["Audits", "Local search"],
   },
   {
     index: "04",
-    eyebrow: "Design",
-    title: "Interface design",
+    title: "Web apps & SaaS",
     description:
-      "Design that starts from the daily loop your users are already in.",
-    span: 2,
+      "Booking systems, client portals and multi-tenant platforms that replace the spreadsheet the business quietly runs on.",
+    tags: [".NET · TypeScript", "Stripe"],
   },
   {
     index: "05",
-    eyebrow: "Partnership",
-    title: "We stay after launch",
+    title: "Care after launch",
     description:
-      "Monitoring, iteration, and the steady removal of what slows you down.",
-    span: 2,
+      "Hosting, monitoring, updates and steady improvements. We stay after launch — the relationship is the deliverable.",
+    tags: ["Maintenance", "Iteration"],
   },
 ];
 
@@ -132,57 +106,54 @@ export const processSteps: ProcessStep[] = [
     index: "01",
     title: "Clarity first",
     description:
-      "Before a line of code, we find the one thing this product has to do well. Most briefs contain three projects; we help you pick the one that matters and defer the rest.",
+      "Before a line of code, we find the one thing this site has to do well — and help you defer the rest.",
   },
   {
     index: "02",
-    title: "Design and engineering together",
+    title: "Design and build together",
     description:
-      "No handoff wall. The people designing the interface are the people building it, so what gets specified is what can actually ship — and what ships still looks like the design.",
+      "No handoff wall. The people designing it are the people building it, so what ships still looks like the design.",
   },
   {
     index: "03",
-    title: "Built to scale",
+    title: "Built to last",
     description:
-      "Typed contracts, a real service layer, no logic smuggled into route handlers. The boring discipline that makes the second year cheaper than the first.",
+      "Clean code, real boundaries, measured performance. The second year costs less than the first.",
   },
   {
     index: "04",
     title: "Partner, not vendor",
     description:
-      "You get direct access to the people building your product, and we stay past launch. The relationship is the deliverable.",
+      "Direct access to the people building your site, and we stay past launch.",
   },
 ];
 
-export interface StackItem {
-  name: string;
-  /** simple-icons slug, resolved by the stack ribbon. */
-  icon: string;
-}
-
-export const stack: StackItem[] = [
-  { name: "Next.js", icon: "nextdotjs" },
-  { name: "React", icon: "react" },
-  { name: "TypeScript", icon: "typescript" },
-  { name: "Tailwind CSS", icon: "tailwindcss" },
-  { name: ".NET", icon: "dotnet" },
-  { name: "C#", icon: "csharp" },
-  { name: "Node.js", icon: "nodedotjs" },
-  { name: "PostgreSQL", icon: "postgresql" },
-  { name: "SQL Server", icon: "microsoftsqlserver" },
-  { name: "Stripe", icon: "stripe" },
-  { name: "Firebase", icon: "firebase" },
-  { name: "Vercel", icon: "vercel" },
-  { name: "Azure", icon: "microsoftazure" },
-  { name: "Figma", icon: "figma" },
-  { name: "GitHub", icon: "github" },
-  { name: "WordPress", icon: "wordpress" },
+/** Proper nouns, not translated. */
+export const stack: string[] = [
+  "Next.js",
+  "React",
+  "TypeScript",
+  "Tailwind CSS",
+  "WordPress",
+  ".NET",
+  "C#",
+  "Node.js",
+  "PostgreSQL",
+  "SQL Server",
+  "Stripe",
+  "Firebase",
+  "Vercel",
+  "Azure",
+  "Figma",
+  "GitHub",
 ];
 
 export interface Testimonial {
   quote: string;
   author: string;
   role: string;
+  /** The one quote the home page leads with. */
+  featured?: boolean;
 }
 
 /**
@@ -202,6 +173,7 @@ export const testimonials: Testimonial[] = [
       "The phone barely rings for appointments now. That alone gave me back half my morning.",
     author: "Shop owner",
     role: "Optimum Car Health",
+    featured: true,
   },
   {
     quote:
@@ -234,14 +206,16 @@ export interface Stat {
   value: number;
   suffix?: string;
   prefix?: string;
+  /** A year or an identifier: shown as-is, never counted up or digit-grouped. */
+  literal?: boolean;
 }
 
 /** TODO(content): verify these against your real numbers before launch. */
 export const stats: Stat[] = [
   { label: "Products shipped", value: 24, suffix: "+" },
-  { label: "Years building", value: 4 },
   { label: "Average Lighthouse score", value: 96 },
   { label: "Client retention", value: 100, suffix: "%" },
+  { label: "Building in Montréal since", value: Number(BUSINESS.foundingYear), literal: true },
 ];
 
 export interface JourneyEntry {
@@ -267,13 +241,13 @@ export const journey: JourneyEntry[] = [
     year: "2025",
     title: "Launch and momentum",
     description:
-      "Members ships — a full multi-tenant SaaS with billing, auth and reporting. Phiro stops being a studio that makes websites and becomes one that builds products.",
+      "Members ships — a full multi-tenant SaaS with billing, auth and reporting. Phiro grows from the websites into the products behind them.",
   },
   {
     year: "Next",
     title: "Expanding the vision",
     description:
-      "More product work, longer partnerships, and a bar that keeps moving. The goal was never volume — it was building things that hold up.",
+      "More client sites, longer partnerships, and a bar that keeps moving. The goal was never volume — it was building things that hold up.",
   },
 ];
 
@@ -291,12 +265,12 @@ export const values: Value[] = [
   {
     title: "Built to last",
     description:
-      "Typed contracts and real boundaries. The second year of a codebase should cost less than the first, not more.",
+      "Real structure, measured performance. The second year of a website should cost less than the first, not more.",
   },
   {
     title: "Human first",
     description:
-      "Software is used by people under time pressure. Every decision gets measured against that, not against a spec sheet.",
+      "Websites are used by people under time pressure. Every decision gets measured against that, not against a spec sheet.",
   },
   {
     title: "Honest about tradeoffs",
@@ -308,8 +282,8 @@ export const values: Value[] = [
 /**
  * Locale-resolved site content.
  *
- * `stack` is deliberately absent: product names (Next.js, .NET, PostgreSQL) are
- * proper nouns and are not translated.
+ * `stack` and `clients` are deliberately absent: they are proper nouns and are
+ * not translated.
  */
 export interface SiteContent {
   services: Service[];

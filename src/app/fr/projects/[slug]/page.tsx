@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CaseStudy } from "@/components/sections/case-study";
-import { CTA } from "@/components/sections/cta";
+import { CaseStudy } from "@/components/projects/case-study";
+import { ClosingCta } from "@/components/sections/closing-cta";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getNextProjectFor, getProjectFor, getProjects } from "@/content/projects";
 import { getDictionary } from "@/content/dictionaries";
@@ -55,8 +55,8 @@ export default async function FrenchProjectPage({ params }: PageProps) {
           )
         )}
       />
-      <CaseStudy project={project} next={getNextProjectFor(slug, "fr")} />
-      <CTA />
+      <CaseStudy project={project} next={getNextProjectFor(slug, "fr")} locale="fr" />
+      <ClosingCta locale="fr" />
     </>
   );
 }

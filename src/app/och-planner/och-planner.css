@@ -43,7 +43,15 @@
 .och-scope h5,
 .och-scope h6 {
   font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.02;
   letter-spacing: -0.025em;
+}
+
+/* The main site's focus ring is ink-on-paper; on this dark page it would
+   vanish, so the campaign keeps a gold ring. */
+.och-scope :focus-visible {
+  outline-color: var(--phiro-gold);
 }
 
 /* Anchor offset so the sticky header never covers a jumped-to section. */

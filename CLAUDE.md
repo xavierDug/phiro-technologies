@@ -38,19 +38,22 @@ route.ts (transport only: parse request, map result → HTTP response)
 
 `src/server/**` is intended to be server-only (it reads `RESEND_API_KEY` etc. via `process.env`). The `server-only` package isn't installed to enforce this at build time — noted in `resend.client.ts` as deliberate for now, not an oversight.
 
-### Preline UI wiring
+### Rendering and motion (performance rules)
 
-Preline (the UI kit behind some of the interactive components, e.g. the navbar's mobile collapse) needs manual re-init on client-side navigation since it isn't React-aware. `PrelineScriptWrapper` (`src/components`) dynamically imports `PrelineScript` with `ssr: false`; `PrelineScript` calls `window.HSStaticMethods.autoInit()` on mount and on every pathname change. The `Window.HSStaticMethods` type comes from `global.d.ts`. If you add a new Preline component, it needs `autoInit()` to have run after navigation — this wiring is why.
+- Sections are **server components** that take a `locale` prop and read copy with `getDictionary(locale)`. Client code is limited to leaf islands: `Navbar`, `LocaleSwitcher`, `components/motion/*`, `HeroStage`, `ProjectIndex`, `ContactForm`, `ArticleRail`, `NumberTicker`.
+- One animation library: `motion` (`motion/react`). `MotionProvider` (in `SiteChrome`) wraps the site in `LazyMotion` (features loaded async, `strict`) and `MotionConfig reducedMotion="user"`. Use `m.*` elements, never `motion.*` — the full component pulls the layout/drag engines into the shared vendor chunk for every page.
+- Above-the-fold entrances are **CSS** (`.page-in`, `.word-rise`, `.fade-up` in `globals.css`) so the LCP element paints without waiting for hydration. Below the fold use `Reveal` / `RevealGroup` / `RevealItem` from `components/motion/reveal`.
+- `useLiteMotion()` is true for reduced motion, touch, data saver or modest hardware (≤4 cores / ≤4 GB). Gate anything continuous (parallax, cursor-following) on it. Only animate `opacity` and `transform`.
+- Client components must not import long-form content (`content/projects*.ts`, blog posts): pass a summary from the server instead (see `toProjectSummary`).
 
 ### Styling
 
-- Tailwind v4, config-first via `tailwind.config.ts` (theme extensions: `gold` color, `blob` keyframes) plus CSS-first config via `@theme inline` in `src/app/globals.css`.
-- `globals.css` also pulls in `preline/variants.css` and sources `node_modules/preline/dist/*.js` via `@source` so Tailwind picks up Preline's own classes.
-- `src/lib/utils.ts` exports a minimal `cn()` class joiner — intentionally not `clsx` + `tailwind-merge` (see the doc comment); don't swap it in without checking whether conflict resolution is actually needed first.
-- `och-planner.css` defines its own CSS custom properties (`--och-blue`, `--och-ink`, `--och-text`, etc.) consumed via arbitrary-value Tailwind classes (`text-[var(--och-...)]`) — keep campaign-specific tokens there rather than in `globals.css`.
+- Tailwind v4, CSS-first: all tokens live in `:root` + `@theme inline` in `src/app/globals.css` (there is no `tailwind.config.ts`). Light editorial palette: `paper` ground, `ink` text, `muted`/`faint`, `panel`/`card` surfaces, `line`/`line-strong` hairlines, and `gold` used **only as a fill** (primary button, the `.accent` highlighter, status dot) — gold text on paper fails contrast. The dark band (`ClosingCta` + `Footer`) uses the `on-ink*` tokens and `.accent-on-ink`.
+- Headlines follow one pattern: plain words + one serif-italic accent word + punctuation — use `Headline` / `SectionHeading` from `components/ui/headline`. Buttons are pills via `ButtonLink` / `buttonStyles` (`components/ui/button-link`).
+- `src/lib/utils.ts` exports `cn()` = `clsx` + `tailwind-merge`.
+- `och-planner.css` defines its own CSS custom properties (`--och-blue`, `--och-ink`, `--och-text`, etc.) consumed via arbitrary-value Tailwind classes — keep campaign-specific tokens there rather than in `globals.css`. It restores its own heading weight and focus ring because the main site's are tuned for the light theme.
 
 ### Dependencies worth knowing about before reaching for them
 
-- `three` and `vanta` are installed but not currently referenced anywhere in `src` — don't assume a Vanta background is wired up somewhere; it isn't (yet).
-- `framer-motion` is used for page-load/scroll animations on the main site (e.g. `(site)/page.tsx`).
-- Icons: `lucide-react` (used in och-planner) and `react-icons` (used on the main site) both exist — check which a given file already uses before adding a new icon import to it.
+- Runtime deps are deliberately few: `next`, `react`, `motion`, `lucide-react` (all icons), `class-variance-authority`, `clsx`, `tailwind-merge`. WebGL/canvas effects (Aurora, LightRays, Particles, three, vanta, ogl, gsap) were removed in the light redesign for performance — don't reintroduce them without measuring on a throttled CPU.
+- Fonts come from `next/font/google` (Geist, Geist Mono, Inter Tight 500/600, Instrument Serif).

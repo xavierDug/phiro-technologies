@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "motion/react";
 
 /**
  * Scroll-triggered fade-and-rise. One place to tune the page's motion so the
@@ -16,7 +16,7 @@ export function Reveal({
     className?: string;
 }) {
     return (
-        <motion.div
+        <m.div
             className={className}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -24,6 +24,6 @@ export function Reveal({
             transition={{ duration: 0.6, ease: "easeOut", delay }}
         >
             {children}
-        </motion.div>
+        </m.div>
     );
 }

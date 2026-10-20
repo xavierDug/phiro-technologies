@@ -18,6 +18,7 @@ export interface FormDict {
   budgetHint: string;
   timelineLegend: string;
   contactLegend: string;
+  contactHint: string;
   name: string;
   company: string;
   optional: string;
@@ -59,6 +60,7 @@ export const formEn: FormDict = {
   budgetHint: "This shapes what we can honestly recommend. No wrong answer.",
   timelineLegend: "When do you want to start?",
   contactLegend: "How do we reach you?",
+  contactHint: "Last step — then tell us about the project.",
   name: "Name",
   company: "Company",
   optional: "(optional)",
@@ -118,6 +120,7 @@ export const formFr: FormDict = {
     "Cela oriente ce que nous pouvons honnêtement recommander. Il n'y a pas de mauvaise réponse.",
   timelineLegend: "Quand souhaitez-vous commencer ?",
   contactLegend: "Comment vous joindre ?",
+  contactHint: "Dernière étape — puis parlez-nous du projet.",
   name: "Nom",
   company: "Entreprise",
   optional: "(facultatif)",

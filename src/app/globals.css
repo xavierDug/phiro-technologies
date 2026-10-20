@@ -6,93 +6,91 @@
 @import "tailwindcss" source(none);
 @source "../**/*.{ts,tsx}";
 
-@custom-variant dark (&:is(.dark *));
-
 /* ---------------------------------------------------------------------------
-   Phiro design tokens.
-   Single source of truth for the marketing site's palette, type and motion.
+   Phiro design tokens — light editorial.
+
+   One warm paper ground, near-black ink, and gold used only as a FILL (primary
+   button, the highlighter under a headline's accent word, a status dot). Gold
+   text on paper fails contrast, so it never happens; on the dark ink band it
+   is fine and is used for the accent word there.
+
+   Contrast (WCAG 2): ink on paper 17.9:1 · muted 6.7:1 · faint 4.8:1 ·
+   ink on gold 12.4:1 · on-ink-muted on ink 7.8:1.
+
    Campaign pages (och-planner) define their own scope-local tokens and are
    intentionally unaffected by anything here.
 --------------------------------------------------------------------------- */
 :root {
-  /* Surfaces — near-black, never pure #000, so elevation reads */
-  --ink: #050506;
-  --surface: #0b0b0d;
-  --surface-2: #121215;
-  --line: rgb(255 255 255 / 0.07);
-  --line-strong: rgb(255 255 255 / 0.14);
+  /* Grounds */
+  --paper: #f6f4ef;
+  --panel: #ece8de;
+  --card: #ffffff;
 
-  /* Accent — one gold spotlight per viewport, never a wash */
+  /* Ink and text */
+  --ink: #0b0b0d;
+  --ink-soft: #2e2e33;
+  --muted: #55555b;
+  --faint: #6b6b71;
+
+  /* Hairlines */
+  --line: rgb(11 11 13 / 0.1);
+  --line-strong: rgb(11 11 13 / 0.22);
+
+  /* Accent — fills only on paper */
   --gold: #f5c843;
+  --gold-hover: #ffd75e;
   --gold-deep: #c9962e;
-  --gold-glow: rgb(245 200 67 / 0.14);
 
-  /* Text */
-  --text: #fafaf9;
-  --muted: #9a9aa0;
-  --faint: #6a6a70;
+  /* The dark band (closing CTA + footer) */
+  --on-ink: #f6f4ef;
+  --on-ink-muted: #a3a3a8;
+  --on-ink-faint: #8a8a90;
+  --line-on-ink: rgb(255 255 255 / 0.12);
 
-  /* Motion — the whole site shares one curve and one duration scale */
+  --error: #b42318;
+
+  /* Motion — one curve for the whole site */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur: 0.7s;
 
-  --background: var(--ink);
-  --foreground: var(--text);
-
-  /* --- shadcn/ui primitive tokens, mapped onto the Phiro palette ---------
-     The site is dark-only, so there is no light variant to maintain. Mapping
-     here (rather than restyling each primitive) means every shadcn component
-     picks up the brand automatically. */
+  /* --- shadcn/ui primitive tokens, mapped onto the palette --- */
   --radius: 0.75rem;
-  --card: var(--surface);
-  --card-foreground: var(--text);
-  --popover: var(--surface-2);
-  --popover-foreground: var(--text);
-  --primary: var(--gold);
-  --primary-foreground: #050506;
-  --secondary: var(--surface-2);
-  --secondary-foreground: var(--text);
-  --muted-bg: var(--surface-2);
-  --muted-foreground: var(--muted);
-  --accent: var(--surface-2);
-  --accent-foreground: var(--text);
-  --destructive: #ef4444;
-  --destructive-foreground: #fafaf9;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --popover: var(--card);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
   --border: var(--line);
   --input: var(--line-strong);
-  --ring: var(--gold);
+  --ring: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-card: var(--card);
   --color-ink: var(--ink);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-gold: var(--gold);
+  --color-gold-hover: var(--gold-hover);
   --color-gold-deep: var(--gold-deep);
-  --color-gold-glow: var(--gold-glow);
-  --color-text: var(--text);
-  --color-dim: var(--muted);
-  --color-faint: var(--faint);
+  --color-on-ink: var(--on-ink);
+  --color-on-ink-muted: var(--on-ink-muted);
+  --color-on-ink-faint: var(--on-ink-faint);
+  --color-line-on-ink: var(--line-on-ink);
+  --color-error: var(--error);
 
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted-bg);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -109,27 +107,9 @@
 
   --ease-expo: var(--ease-out-expo);
 
-  /* Magic UI animation registrations */
-  --animate-shiny-text: shiny-text 8s infinite;
-  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
-  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  --animate-aurora-drift: aurora-drift 18s ease-in-out infinite;
 
-  @keyframes shiny-text {
-    0%, 90%, 100% { background-position: calc(-100% - var(--shiny-width)) 0; }
-    30%, 60% { background-position: calc(100% + var(--shiny-width)) 0; }
-  }
-  @keyframes shimmer-slide {
-    to { transform: translate(calc(100cqw - 100%), 0); }
-  }
-  @keyframes spin-around {
-    0% { transform: translateZ(0) rotate(0); }
-    15%, 35% { transform: translateZ(0) rotate(90deg); }
-    65%, 85% { transform: translateZ(0) rotate(270deg); }
-    100% { transform: translateZ(0) rotate(360deg); }
-  }
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(calc(-100% - var(--gap))); }
@@ -138,30 +118,7 @@
     from { transform: translateY(0); }
     to { transform: translateY(calc(-100% - var(--gap))); }
   }
-  /* Static stand-in for the WebGL hero when motion is reduced */
-  @keyframes aurora-drift {
-    0%, 100% { transform: translate3d(-4%, 0, 0) scale(1.05); opacity: 0.55; }
-    50% { transform: translate3d(4%, -2%, 0) scale(1.15); opacity: 0.8; }
-  }
-  --animate-orbit: orbit calc(var(--duration)*1s) linear infinite;
-  --animate-ripple: ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite
-;
-  @keyframes orbit {
-  0% {
-    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
-    }
-  100% {
-    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
-    }
-  }
-  @keyframes ripple {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    }
-  50% {
-    transform: translate(-50%, -50%) scale(0.9);
-    }
-  }}
+}
 
 html {
   scroll-behavior: smooth;
@@ -170,21 +127,41 @@ html {
 }
 
 body {
-  background: var(--ink);
-  color: var(--text);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Display type is set tight and heavy — the site's primary voice. */
+/* Display type: medium weight, tight tracking. Lighter than a startup's 700 —
+   it reads as edited rather than shouted. */
 h1, h2, h3, h4 {
   font-family: var(--font-display-sans), var(--font-geist-sans), sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1.02;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-wrap: balance;
 }
 
-/* The one editorial flourish: a single serif-italic accent word per headline. */
-.accent-serif {
+p { text-wrap: pretty; }
+
+/* The editorial signature: one serif-italic word per headline, with a gold
+   highlighter stroke behind its lower third. The stroke is a background so it
+   wraps with the word and never needs layout. */
+.accent {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  padding-inline: 0.08em;
+  margin-inline: -0.04em;
+  background: linear-gradient(transparent 64%, var(--gold) 64%, var(--gold) 92%, transparent 92%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* On the dark band the highlighter would put paper text on gold, so the
+   accent word becomes gold text instead (12.4:1 on ink). */
+.accent-on-ink {
   font-family: var(--font-instrument-serif), Georgia, serif;
   font-style: italic;
   font-weight: 400;
@@ -194,45 +171,72 @@ h1, h2, h3, h4 {
 
 .eyebrow {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 0.6875rem;
-  letter-spacing: 0.22em;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: var(--muted);
 }
 
-.glass {
-  background: rgb(255 255 255 / 0.04);
+/* Browser chrome around a screenshot. Pure CSS so it costs nothing. */
+.browser-frame {
+  background: var(--card);
   border: 1px solid var(--line);
-  backdrop-filter: blur(14px);
-  border-radius: 1rem;
-}
-
-/* Gold hairline used to separate major sections without a hard rule. */
-.rule-gold {
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--gold-glow) 20%,
-    var(--gold-glow) 80%,
-    transparent
-  );
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgb(11 11 13 / 0.05),
+    0 40px 70px -36px rgb(11 11 13 / 0.38);
 }
 
 ::selection {
   background: var(--gold);
-  color: #050506;
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--ink);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* Firefox / WebKit scrollbar tuned to the dark surface */
-* {
-  scrollbar-color: var(--surface-2) var(--ink);
+/* Page entrance. CSS, not JS, so it plays on first paint instead of waiting
+   for hydration — a JS fade from opacity 0 would delay the LCP element. */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.page-in { animation: page-in 0.5s var(--ease-out-expo) both; }
+
+/* Hero headline: each word rises out of its own clip box. Driven by CSS so
+   the h1 is painted (and counted as LCP) without any JavaScript. */
+@keyframes word-rise {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room for descenders and the italic overhang inside the clip box. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  padding-inline: 0.06em;
+  margin-inline: -0.06em;
+}
+.word-rise {
+  display: inline-block;
+  animation: word-rise 0.9s var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 60ms + 80ms);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.fade-up {
+  animation: fade-up 0.8s var(--ease-out-expo) both;
+  animation-delay: var(--delay, 0ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -241,7 +245,16 @@ h1, h2, h3, h4 {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* A marquee that jumps to its last frame is worse than one that holds still. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-vertical {
+    animation: none !important;
   }
 }

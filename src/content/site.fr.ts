@@ -18,42 +18,38 @@ import type {
 export const servicesFr: Service[] = [
   {
     index: "01",
-    eyebrow: "Plateformes",
-    title: "Ingénierie produit et SaaS",
+    title: "Sites vitrines",
     description:
-      "Plateformes multilocataires, facturation et tableaux de bord — conçus pour survivre à leur deuxième année, pas seulement à leur lancement.",
-    span: 3,
+      "Des sites rapides et distinctifs que votre équipe peut vraiment modifier — bâtis autour de la seule action que vos visiteurs doivent poser.",
+    tags: ["Next.js · WordPress", "Contenu et structure"],
   },
   {
     index: "02",
-    eyebrow: "Applications",
-    title: "Applications web",
+    title: "Design web",
     description:
-      "Outils internes et applications clients qui remplacent le chiffrier sur lequel l'entreprise repose en silence.",
-    span: 3,
+      "Un design d'interface et visuel qui part du quotidien de vos clients, pas d'un gabarit.",
+    tags: ["Design d'interface", "Systèmes de design"],
   },
   {
     index: "03",
-    eyebrow: "Sites web",
-    title: "Sites vitrines",
-    description: "Des sites rapides et distinctifs que votre équipe peut vraiment modifier.",
-    span: 2,
+    title: "Référencement et performance",
+    description:
+      "Référencement technique, données structurées et Core Web Vitals — les failles que personne ne voit avant que le trafic cesse d'arriver.",
+    tags: ["Audits", "Recherche locale"],
   },
   {
     index: "04",
-    eyebrow: "Design",
-    title: "Design d'interface",
+    title: "Applications web et SaaS",
     description:
-      "Un design qui part du quotidien dans lequel vos utilisateurs sont déjà.",
-    span: 2,
+      "Systèmes de réservation, portails clients et plateformes multilocataires qui remplacent le chiffrier sur lequel l'entreprise repose en silence.",
+    tags: [".NET · TypeScript", "Stripe"],
   },
   {
     index: "05",
-    eyebrow: "Partenariat",
-    title: "Nous restons après le lancement",
+    title: "Accompagnement après le lancement",
     description:
-      "Surveillance, itération, et le retrait constant de ce qui vous ralentit.",
-    span: 2,
+      "Hébergement, surveillance, mises à jour et améliorations continues. Nous restons après le lancement — la relation est le livrable.",
+    tags: ["Maintenance", "Itération"],
   },
 ];
 
@@ -62,25 +58,25 @@ export const processStepsFr: ProcessStep[] = [
     index: "01",
     title: "La clarté d'abord",
     description:
-      "Avant la première ligne de code, nous cherchons la seule chose que ce produit doit réussir. La plupart des mandats en contiennent trois ; nous vous aidons à choisir celui qui compte et à reporter le reste.",
+      "Avant la première ligne de code, nous trouvons la seule chose que ce site doit réussir — et nous vous aidons à reporter le reste.",
   },
   {
     index: "02",
-    title: "Design et ingénierie ensemble",
+    title: "Concevoir et développer ensemble",
     description:
-      "Aucun mur de transfert. Les personnes qui conçoivent l'interface sont celles qui la développent : ce qui est spécifié est ce qui peut réellement être livré — et ce qui est livré ressemble encore au design.",
+      "Aucun mur de transfert. Les personnes qui le conçoivent sont celles qui le développent : ce qui est livré ressemble encore au design.",
   },
   {
     index: "03",
-    title: "Bâti pour évoluer",
+    title: "Bâti pour durer",
     description:
-      "Des contrats typés, une véritable couche de service, aucune logique dissimulée dans les gestionnaires de routes. La discipline ennuyeuse qui rend la deuxième année moins chère que la première.",
+      "Du code propre, de vraies frontières, une performance mesurée. La deuxième année coûte moins cher que la première.",
   },
   {
     index: "04",
     title: "Partenaire, pas fournisseur",
     description:
-      "Vous avez un accès direct aux personnes qui construisent votre produit, et nous restons après le lancement. La relation est le livrable.",
+      "Un accès direct aux personnes qui bâtissent votre site, et nous restons après le lancement.",
   },
 ];
 
@@ -101,6 +97,7 @@ export const testimonialsFr: Testimonial[] = [
       "Le téléphone ne sonne pratiquement plus pour les rendez-vous. Ça seul m'a redonné la moitié de mes matinées.",
     author: "Propriétaire",
     role: "Optimum Car Health",
+    featured: true,
   },
   {
     quote:
@@ -130,9 +127,9 @@ export const testimonialsFr: Testimonial[] = [
 
 export const statsFr: Stat[] = [
   { label: "Produits livrés", value: 24, suffix: "+" },
-  { label: "Années à bâtir", value: 4 },
   { label: "Score Lighthouse moyen", value: 96 },
   { label: "Rétention des clients", value: 100, suffix: "%" },
+  { label: "À Montréal depuis", value: 2023, literal: true },
 ];
 
 export const journeyFr: JourneyEntry[] = [
@@ -152,13 +149,13 @@ export const journeyFr: JourneyEntry[] = [
     year: "2025",
     title: "Lancement et élan",
     description:
-      "Members est livré — un SaaS multilocataire complet avec facturation, authentification et rapports. Phiro cesse d'être un studio qui fait des sites web pour devenir un studio qui bâtit des produits.",
+      "Members est livré — un SaaS multilocataire complet avec facturation, authentification et rapports. Phiro passe des sites web aux produits qui les accompagnent.",
   },
   {
     year: "La suite",
     title: "Élargir la vision",
     description:
-      "Plus de travail produit, des partenariats plus longs, et une barre qui continue de monter. L'objectif n'a jamais été le volume — c'était de bâtir des choses qui tiennent.",
+      "Plus de sites clients, des partenariats plus longs, et une barre qui continue de monter. L'objectif n'a jamais été le volume — c'était de bâtir des choses qui tiennent.",
   },
 ];
 
@@ -171,12 +168,12 @@ export const valuesFr: Value[] = [
   {
     title: "Bâti pour durer",
     description:
-      "Des contrats typés et de vraies frontières. La deuxième année d'une base de code devrait coûter moins cher que la première, pas plus.",
+      "Une vraie structure, une performance mesurée. La deuxième année d'un site devrait coûter moins cher que la première, pas plus.",
   },
   {
     title: "L'humain d'abord",
     description:
-      "Les logiciels sont utilisés par des personnes sous pression. Chaque décision se mesure à cela, pas à un cahier des charges.",
+      "Les sites web sont utilisés par des personnes pressées. Chaque décision se mesure à cela, pas à un cahier des charges.",
   },
   {
     title: "Honnêtes sur les compromis",

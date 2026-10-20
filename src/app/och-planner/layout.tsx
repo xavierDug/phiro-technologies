@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "./och-planner.css";
+import { OchMotion } from "./motion";
 
 export const metadata: Metadata = {
     title: "OCH Planner — a professional website for your garage, from $600",
@@ -27,5 +28,9 @@ export default function OchPlannerLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    return <div className="och-scope min-h-screen antialiased">{children}</div>;
+    return (
+        <div className="och-scope min-h-screen antialiased">
+            <OchMotion>{children}</OchMotion>
+        </div>
+    );
 }

@@ -77,6 +77,7 @@ export const projectsFr: Project[] = [
     intro:
       "Un garage occupé perd de l'argent de deux façons : des baies vides, et un conseiller au service qui passe la moitié de sa journée au téléphone. OCH Planner offre aux clients une réservation en ligne autonome, et donne à l'atelier une vue unique de l'horaire de chaque baie, chaque jour.",
     cover: "/OCHProject.png",
+    coverStyle: "mark",
     stack: ["Next.js", "React", "TypeScript", "Firebase", "Tailwind CSS"],
     challenge: {
       heading: "Le défi",
@@ -257,5 +258,6 @@ export const projectsFr: Project[] = [
         frame: "safari",
       },
     ],
+    featured: true,
   },
 ];
