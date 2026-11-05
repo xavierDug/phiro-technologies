@@ -41,7 +41,7 @@ export const OG_LOCALE: Record<Locale, string> = {
  */
 export const BUSINESS = {
   legalName: "Phiro Technologies",
-  email: "hello@phirotechnologies.com",
+  email: "contact@phirotechnologies.com",
   /** Display form, matching the Google Business Profile. */
   telephone: "+1 514-519-0053",
   /** E.164, required by schema.org and `tel:` links. */
