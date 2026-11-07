@@ -16,9 +16,9 @@ export const offerFr: OfferContent = {
     see: "Voir les forfaits",
     glance: ["À partir de **{essential}**", "En ligne en **~5 jours ouvrables**", "Prix **fixe**", "**{deposit}** au départ"],
     glanceLabel: "En bref",
-    clientLabel: "Site client · Soudure FLF",
-    desktopAlt: "Site de Soudure FLF sur ordinateur, conçu et réalisé par Phiro",
-    phoneAlt: "Site de Soudure FLF sur téléphone",
+    clientLabel: "Réalisation récente · Members",
+    desktopAlt: "Site de Members sur ordinateur, conçu et réalisé par Phiro",
+    phoneAlt: "Site de Members sur téléphone",
   },
   packages: {
     eyebrow: "Forfaits",

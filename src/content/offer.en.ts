@@ -16,9 +16,9 @@ export const offerEn: OfferContent = {
     see: "See the packages",
     glance: ["From **{essential}**", "Live in **~5 business days**", "**Fixed** price", "**{deposit}** to start"],
     glanceLabel: "At a glance",
-    clientLabel: "Client site · Soudure FLF",
-    desktopAlt: "Soudure FLF website on desktop, designed and built by Phiro",
-    phoneAlt: "Soudure FLF website on a phone",
+    clientLabel: "Recent work · Members",
+    desktopAlt: "Members website on desktop, designed and built by Phiro",
+    phoneAlt: "Members website on a phone",
   },
   packages: {
     eyebrow: "Packages",

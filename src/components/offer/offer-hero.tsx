@@ -24,7 +24,7 @@ function GlanceItem({ text }: { text: string }) {
 }
 
 /**
- * Centered statement over one real client site shown twice: a desktop browser
+ * Centered statement over one real Phiro site shown twice: a desktop browser
  * frame with a phone in front, both sinking into the panel band that the
  * packages section continues. Server component; every entrance is CSS so the
  * headline and screenshot paint without waiting for hydration.
@@ -123,30 +123,27 @@ export function OfferHero({ locale }: { locale: Locale }) {
               </span>
             </div>
             <Image
-              src="/SoudureFLF.png"
+              src="/offer-hero-desktop.webp"
               alt={copy.desktopAlt}
-              width={1706}
-              height={957}
+              width={2000}
+              height={1035}
               priority
               sizes="(max-width: 1280px) 92vw, 1120px"
               className="block h-auto w-full"
             />
           </figure>
 
-          {/* Phone in front. TODO(content): swap the desktop crop for a real 390px capture. */}
+          {/* Phone in front: a real narrow-viewport capture of the same site. */}
           <div className="absolute top-[22%] right-[2%] z-[2] aspect-[9/19.5] w-[34%] rounded-3xl bg-ink p-[5px] shadow-[0_48px_80px_-24px_rgb(11_11_13/0.45),inset_0_0_0_1px_rgb(255_255_255/0.12)] md:top-[15%] md:right-[5%] md:w-[22%] md:rounded-[46px] md:p-[9px]">
             <div className="relative size-full overflow-hidden rounded-[19px] bg-[#1b1b1d] md:rounded-[37px]">
-              <span
-                aria-hidden="true"
-                className="absolute top-1.5 left-1/2 z-[1] h-3 w-[30%] -translate-x-1/2 rounded-full bg-ink md:top-2.5 md:h-[22px]"
-              />
+              {/* Anchored to the bottom and 3% tall: pushes the capture's clipped top edge out of view. */}
               <Image
-                src="/SoudureFLF.png"
+                src="/offer-hero-phone.png"
                 alt={copy.phoneAlt}
-                width={1706}
-                height={957}
+                width={321}
+                height={714}
                 sizes="(max-width: 768px) 34vw, 260px"
-                className="size-full object-cover object-left-top"
+                className="absolute inset-x-0 bottom-0 h-[103%] w-full object-cover object-bottom"
               />
             </div>
           </div>
