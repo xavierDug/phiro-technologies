@@ -63,6 +63,7 @@ export const fr: Dictionary = {
   },
   common: {
     startProject: "Démarrer un projet",
+    bookCall: "Réserver 15 minutes",
     seeWork: "Voir nos réalisations",
     getInTouch: "Nous joindre",
     nextCaseStudy: "Étude de cas suivante",

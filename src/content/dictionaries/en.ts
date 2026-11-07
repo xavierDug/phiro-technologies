@@ -55,6 +55,7 @@ export const en: Dictionary = {
   },
   common: {
     startProject: "Start a project",
+    bookCall: "Book 15 minutes",
     seeWork: "See our work",
     getInTouch: "Get in touch",
     nextCaseStudy: "Next case study",

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useLocale } from "@/components/layout/locale-provider";
-import { localePath, stripLocale, type Locale } from "@/lib/seo";
+import { localePath, stripLocale, translatePath, type Locale } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 /** Matches "/blog/some-slug" (locale-free) and captures the slug. */
@@ -26,14 +26,20 @@ function resolveTarget(
   slugMap: { slug: string; locale: Locale; translations: Partial<Record<Locale, string>> }[]
 ): string {
   const path = stripLocale(pathname);
+  const currentLocale: Locale = otherLocale === "en" ? "fr" : "en";
+
+  // Pages with a translated URL (`/websites` <-> `/fr/sites-web`).
+  const translated = translatePath(path, currentLocale, otherLocale);
+  if (translated) return localePath(translated, otherLocale);
+
   const match = path.match(BLOG_POST_PATTERN);
 
   if (match) {
     const [, slug] = match;
     const post = slugMap.find((entry) => entry.slug === slug);
-    const translated = post?.translations[otherLocale];
-    return translated
-      ? localePath(translated, otherLocale)
+    const translatedSlug = post?.translations[otherLocale];
+    return translatedSlug
+      ? localePath(translatedSlug, otherLocale)
       : localePath("/blog", otherLocale);
   }
 

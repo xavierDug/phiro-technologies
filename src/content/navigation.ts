@@ -1,5 +1,25 @@
 import type { Dictionary } from "@/content/dictionaries/types";
-import { localePath, type Locale } from "@/lib/seo";
+import { TRANSLATED_PATHS, localePath, stripLocale, type Locale } from "@/lib/seo";
+
+/**
+ * In-page anchors of the website-packages page, per locale. Here rather than in
+ * the offer content so the navbar can use them without bundling that copy.
+ */
+export const OFFER_ANCHORS: Record<Locale, { packages: string; book: string }> = {
+  en: { packages: "packages", book: "book" },
+  fr: { packages: "forfaits", book: "reserver" },
+};
+
+/**
+ * The header's call to action. Everywhere it starts a project; on the
+ * website-packages page it books the 15-minute call on that same page.
+ */
+export function headerCta(pathname: string, dict: Dictionary, locale: Locale): NavLink {
+  if (stripLocale(pathname) === TRANSLATED_PATHS["/websites"][locale]) {
+    return { href: `#${OFFER_ANCHORS[locale].book}`, label: dict.common.bookCall };
+  }
+  return { href: localePath("/contact", locale), label: dict.common.startProject };
+}
 
 /**
  * Primary navigation, in its own module so client components (the navbar)

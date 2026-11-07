@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -33,6 +33,7 @@ const ICONS = {
   "up-right": ArrowUpRight,
   right: ArrowRight,
   left: ArrowLeft,
+  down: ArrowDown,
 } as const;
 
 /** Nudge each arrow in the direction it points. */
@@ -40,6 +41,7 @@ const ICON_MOTION = {
   "up-right": "transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
   right: "transition-transform duration-300 group-hover:translate-x-0.5",
   left: "transition-transform duration-300 group-hover:-translate-x-0.5",
+  down: "transition-transform duration-300 group-hover:translate-y-0.5",
 } as const;
 
 type ButtonLinkProps = VariantProps<typeof buttonStyles> & {

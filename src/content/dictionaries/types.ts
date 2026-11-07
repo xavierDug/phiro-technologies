@@ -59,6 +59,8 @@ export interface BlogDict {
 
 export interface CommonDict {
   startProject: string;
+  /** Header CTA on the website-packages page, which books a call instead. */
+  bookCall: string;
   seeWork: string;
   getInTouch: string;
   nextCaseStudy: string;

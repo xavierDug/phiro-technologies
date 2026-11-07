@@ -40,6 +40,8 @@ interface SectionHeadingProps extends HeadlineProps {
   className?: string;
   /** Rendered to the right of the heading on wide screens (a link or button). */
   aside?: React.ReactNode;
+  /** Id for the heading element, so a section can point `aria-labelledby` at it. */
+  id?: string;
 }
 
 const SIZES = {
@@ -58,13 +60,14 @@ export function SectionHeading({
   size = "section",
   className,
   aside,
+  id,
   ...headline
 }: SectionHeadingProps) {
   return (
     <div className={cn("flex flex-wrap items-end justify-between gap-x-16 gap-y-8", className)}>
       <div className="min-w-0">
         <p className="eyebrow mb-6">{eyebrow}</p>
-        <Tag className={SIZES[size]}>
+        <Tag id={id} className={SIZES[size]}>
           <Headline {...headline} />
         </Tag>
       </div>

@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, m, useMotionValueEvent, useScroll } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
-import { buildNavLinks } from "@/content/navigation";
+import { buildNavLinks, headerCta } from "@/content/navigation";
 import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/motion";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -50,6 +50,7 @@ export function Navbar() {
   const pathname = usePathname();
   const { locale, dict } = useLocale();
   const navLinks = useMemo(() => buildNavLinks(dict, locale), [dict, locale]);
+  const cta = headerCta(pathname, dict, locale);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -112,12 +113,12 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             <LocaleSwitcher className="hidden sm:inline-flex" />
             <ButtonLink
-              href={localePath("/contact", locale)}
+              href={cta.href}
               variant="ink"
               size="sm"
               className="hidden sm:inline-flex"
             >
-              {dict.common.startProject}
+              {cta.label}
             </ButtonLink>
             <button
               type="button"
@@ -179,8 +180,8 @@ export function Navbar() {
             </ul>
 
             <div className="mt-auto flex flex-col gap-4 pb-10">
-              <ButtonLink href={localePath("/contact", locale)} icon="up-right" className="w-full">
-                {dict.common.startProject}
+              <ButtonLink href={cta.href} icon="up-right" className="w-full">
+                {cta.label}
               </ButtonLink>
               <div className="flex justify-center">
                 <LocaleSwitcher />

@@ -10,8 +10,12 @@ import { usePathname } from "next/navigation";
  * `data-intro="skip"` and the curtain never shows. Otherwise it marks the
  * intro as seen. Wrapped in try/catch because storage can throw (private
  * mode, blocked cookies) — the intro then simply plays.
+ *
+ * The website-packages page (`/websites`, `/fr/sites-web`) always skips it:
+ * visitors arrive from an outreach email and should see prices in under a
+ * second, not a brand moment.
  */
-const BOOT_SCRIPT = `(function(){var d=document.documentElement;try{if(sessionStorage.getItem("phiro-intro")||matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.intro="skip";return}sessionStorage.setItem("phiro-intro","1")}catch(e){}d.dataset.intro="play"})();`;
+const BOOT_SCRIPT = `(function(){var d=document.documentElement;if(/^\\/(websites|fr\\/sites-web)\\/?$/.test(location.pathname)){d.dataset.intro="skip";return}try{if(sessionStorage.getItem("phiro-intro")||matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.intro="skip";return}sessionStorage.setItem("phiro-intro","1")}catch(e){}d.dataset.intro="play"})();`;
 
 /**
  * How long after load the delayed hero entrances have all finished. Only then

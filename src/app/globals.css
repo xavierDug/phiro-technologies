@@ -330,6 +330,66 @@ p { text-wrap: pretty; }
   }
 }
 
+/* Home hero work strip (WorkStrip). Cards sit on the INSIDE of a cylinder of
+   radius --r; the ring is pushed back by --r so the front card lands on the
+   z=0 plane, and the perspective is only slightly larger than --r, which puts
+   the camera just inside the cylinder: the centre card is flat, its
+   neighbours bend toward the viewer. Only transform animates. */
+.work-strip {
+  --r: 1300px;
+  --persp: 1500px;
+  --w: 452px;
+  --step: 22.5deg;
+  position: relative;
+  height: 480px;
+  perspective: var(--persp);
+  perspective-origin: 50% 42%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%);
+}
+.work-strip__ring {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  transform-style: preserve-3d;
+  transform: translateZ(var(--r)) rotateY(-6deg);
+  animation: work-strip-turn 150s linear infinite;
+}
+.work-strip:hover .work-strip__ring,
+.work-strip:focus-within .work-strip__ring {
+  animation-play-state: paused;
+}
+.work-strip__card {
+  position: absolute;
+  left: calc(var(--w) / -2);
+  top: -162px;
+  width: var(--w);
+  transform: rotateY(calc(var(--i) * var(--step))) translateZ(calc(var(--r) * -1));
+  backface-visibility: hidden;
+}
+.work-strip__floor {
+  position: absolute;
+  inset: auto 12% 34px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(11 11 13 / 0.1), transparent);
+  pointer-events: none;
+}
+@keyframes work-strip-turn {
+  from { transform: translateZ(var(--r)) rotateY(-6deg); }
+  to { transform: translateZ(var(--r)) rotateY(-366deg); }
+}
+@media (max-width: 639px) {
+  .work-strip { --r: 680px; --persp: 780px; --w: 236px; height: 280px; }
+  .work-strip__card { top: -86px; }
+  .work-strip__floor { bottom: 18px; }
+}
+/* Touch and reduced motion: three cards, held still. */
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .work-strip__ring { animation: none; }
+}
+
 /* A marquee that jumps to its last frame is worse than one that holds still. */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,

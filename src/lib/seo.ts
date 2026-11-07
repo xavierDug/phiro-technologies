@@ -122,6 +122,25 @@ export function languageAlternatesFor(
 }
 
 /**
+ * Pages whose URL is translated rather than just prefixed: `/websites` is
+ * `/fr/sites-web`, not `/fr/websites`. Keyed by the English (canonical) path;
+ * each value is the locale-free path per locale. Shared by metadata, the
+ * language switcher and anything else that must not 404 on a prefix swap.
+ */
+export const TRANSLATED_PATHS: Record<string, Record<Locale, string>> = {
+  "/websites": { en: "/websites", fr: "/sites-web" },
+};
+
+/**
+ * The other locale's locale-free path for a translated page, or null when the
+ * page shares one path across locales.
+ */
+export function translatePath(path: string, from: Locale, to: Locale): string | null {
+  const entry = Object.values(TRANSLATED_PATHS).find((paths) => paths[from] === path);
+  return entry ? entry[to] : null;
+}
+
+/**
  * Inverse of `localePath`: removes the `/fr` prefix so a path can be compared
  * or re-prefixed for the other locale. Used by nav active-state matching and
  * the language switcher.
